@@ -93,18 +93,19 @@
 <script src="https://cdn.bootcss.com/ace/1.4.6/ace.js"></script>
 <script src="https://cdn.bootcss.com/ace/1.4.6/ext-language_tools.js"></script>
 <script src="https://cdn.bootcss.com/ace/1.4.6/theme-twilight.js"></script>
-<script src="https://cdn.bootcss.com/ace/1.4.6/theme-clouds.js"></script>
-<script src="https://cdn.bootcss.com/ace/1.4.6/mode-sh.js"></script>
+<script src="https://cdn.bootcss.com/ace/1.4.6/mode-terraform.js"></script>
+<script src="https://cdn.bootcss.com/ace/1.4.6/ext-beautify.js"></script>
 
 <script>
 
 
     //初始化对象
     let editor = ace.edit("code");
+    let beautify = ace.require("ace/ext/beautify");
 
     //设置风格和语言（更多风格和语言，请到github上相应目录查看）
     editor.setTheme("ace/theme/twilight");
-    editor.session.setMode("ace/mode/sh");
+    editor.session.setMode("ace/mode/terraform");
 
     //字体大小
     editor.setFontSize(18);
@@ -123,6 +124,12 @@
         enableLiveAutocompletion: true
     });
 
+
+    editor.on("paste", function(e) {
+
+        setTimeout(function(){ beautify.beautify(editor.session); }, 500);
+
+    });
 
     $("#save").addClass("layui-btn-disabled");
     $("#exec").addClass("layui-btn-disabled");
@@ -179,6 +186,7 @@
                             })
 
                             editor.session.setValue(text);
+                            beautify.beautify(editor.session);
 
 
                         });
