@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="67cf9ddd-32fc-4271-a7c2-197e2de1c07a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cloud/cloud.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cloud/cloud.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/soft/soft.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/soft/soft.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,71 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/soft/view.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-262">
-              <caret line="33" selection-start-line="33" selection-end-line="34" selection-end-column="54" />
-              <folding>
-                <element signature="e#193#202#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="26" selection-start-line="26" selection-end-line="26" selection-end-column="46" />
-              <folding>
-                <element signature="e#12#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/cloud/view.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="86" column="42" selection-start-line="86" selection-start-column="42" selection-end-line="86" selection-end-column="42" />
-              <folding>
-                <element signature="e#192#201#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cloud/cloud.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="533">
-              <caret line="277" lean-forward="true" selection-start-line="277" selection-end-line="277" />
-              <folding>
-                <element signature="n#style#0;n#pre#0;n#div#2;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/ansi_up.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="608">
-              <caret line="420" column="4" selection-start-line="420" selection-start-column="4" selection-end-line="420" selection-end-column="4" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state relative-caret-position="15">
+              <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -108,7 +49,6 @@
         <option value="$PROJECT_DIR$/test/ping.py" />
         <option value="$PROJECT_DIR$/terraform_playbooks/amazon/rds/auror/test.tf" />
         <option value="$PROJECT_DIR$/ansible_playbooks/hosts" />
-        <option value="$PROJECT_DIR$/templates/soft/soft.html" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/routes.py" />
         <option value="$PROJECT_DIR$/main.py" />
@@ -118,6 +58,7 @@
         <option value="$PROJECT_DIR$/apps/cloud/view.py" />
         <option value="$PROJECT_DIR$/static/ansi_up.js" />
         <option value="$PROJECT_DIR$/templates/cloud/cloud.html" />
+        <option value="$PROJECT_DIR$/templates/soft/soft.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
@@ -191,12 +132,12 @@
       <workItem from="1579596271951" duration="472000" />
       <workItem from="1579596842426" duration="32179000" />
       <workItem from="1580716915849" duration="291000" />
-      <workItem from="1580717782509" duration="14199000" />
+      <workItem from="1580717782509" duration="14878000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47141000" />
+    <option name="totallyTimeSpent" value="47820000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="6" y="29" width="1338" height="777" extended-state="0" />
@@ -267,13 +208,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/cloud/terraform_new.html" />
-    <entry file="file://$PROJECT_DIR$/templates/soft/soft.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="180" column="21" selection-start-line="180" selection-start-column="21" selection-end-line="180" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ansible_playbooks/main.yml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -425,8 +359,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/cloud/cloud.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="277" lean-forward="true" selection-start-line="277" selection-end-line="277" />
+        <state relative-caret-position="462">
+          <caret line="238" column="8" selection-start-line="238" selection-start-column="8" selection-end-line="238" selection-end-column="72" />
+          <folding>
+            <element signature="n#style#0;n#pre#0;n#div#2;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/soft/soft.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="518">
+          <caret line="229" column="7" selection-start-line="229" selection-start-column="7" selection-end-line="229" selection-end-column="7" />
           <folding>
             <element signature="n#style#0;n#pre#0;n#div#2;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
@@ -435,8 +379,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
+        <state relative-caret-position="15">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
         </state>
       </provider>
     </entry>

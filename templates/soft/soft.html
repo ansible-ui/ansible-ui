@@ -6,11 +6,6 @@
     <title>layout 后台大布局 - Layui</title>
     <link rel="stylesheet" type="text/css"
           href="{{ url('static', filename='layui/css/layui.css') }}"/>
-    <script src="/static/ace/jquery/jquery-1.8.3.min.js"></script>
-    <script src="/static/ace/ace/ace.js"></script>
-    <script src="/static/ace/ace/theme-twilight.js"></script>
-    <script src="/static/ace/ace/mode-sh.js"></script>
-    <script src="/static/ace/jquery-ace.min.js"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -70,13 +65,16 @@
             <div class="layui-form-item">
                 <button type="button" class="layui-btn" lay-submit="" id="save">修改保存</button>
 
-                 <button type="button" class="layui-btn" lay-submit="" id="exec">执行任务</button>
+                <button type="button" class="layui-btn" lay-submit="" id="exec">执行任务</button>
 
                 <input type="input" id="path" name="path" value="0" hidden/>
             </div>
-            <div id="servermsg"><h1>Message log:</h1></div>
+            <div class="layui-form-item" id="servermsg">
+
+            </div>
+
             <div class="layui-form-item">
-                <textarea name="code" id="code" class="my-code-area" rows="200" style="width: 100%"></textarea>
+                <pre id="code" class="ace_editor" style="min-height:400px"></pre>
             </div>
 
             </form>
@@ -85,13 +83,42 @@
     </div>
 
 </div>
+<script type="text/javascript" src="{{ url('static', filename='win10/js/jquery-2.2.4.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('static', filename='layui/layui.all.js') }}"></script>
+<script type="text/javascript" src="{{ url('static', filename='ansi_up.js') }}"></script>
+<script src="https://cdn.bootcss.com/ace/1.4.6/ace.js"></script>
+<script src="https://cdn.bootcss.com/ace/1.4.6/ext-language_tools.js"></script>
+<script src="https://cdn.bootcss.com/ace/1.4.6/theme-twilight.js"></script>
+<script src="https://cdn.bootcss.com/ace/1.4.6/theme-clouds.js"></script>
+<script src="https://cdn.bootcss.com/ace/1.4.6/mode-sh.js"></script>
 <script>
 
     $("#save").addClass("layui-btn-disabled");
     $("#exec").addClass("layui-btn-disabled");
 
-    $('.my-code-area').ace({theme: 'twilight', lang: 'sh'});
+    //初始化对象
+    let editor = ace.edit("code");
+
+    //设置风格和语言（更多风格和语言，请到github上相应目录查看）
+    editor.setTheme("ace/theme/twilight");
+    editor.session.setMode("ace/mode/sh");
+
+    //字体大小
+    editor.setFontSize(18);
+
+    //设置只读（true时只读，用于展示代码）
+    editor.setReadOnly(false);
+
+    //自动换行,设置为off关闭
+    editor.setOption("wrap", "free")
+
+    //启用提示菜单
+    ace.require("ace/ext/language_tools");
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
 
     //JavaScript代码区域
     layui.use('element', function () {
@@ -133,27 +160,15 @@
                         $.post("/soft/ansible_read", {"filename": obj.data.path}, function (data, status) {
 
                             let text = ""
-                            $.each(data.data,function (k,v) {
-                                 //
-                                 // console.log(k);
-                                 //  console.log(v);
+                            $.each(data.data, function (k, v) {
+                                //
+                                // console.log(k);
+                                //  console.log(v);
 
-                                  text = text + v;
+                                text = text + v;
                             })
 
-                            var decorator = $('.my-code-area').data('ace');
-                            var aceInstance = decorator;
-                            //var text = JSON.stringify(data, "\n", '\t');
-
-                            if (aceInstance != null) {
-                                aceInstance.destroy();
-
-                            }
-
-                            aceInstance.create();
-                                aceInstance.editor.theme('twilight');
-                                aceInstance.editor.lang('sh');
-                                aceInstance.editor.value(text);
+                            editor.session.setValue(text);
 
 
                         });
@@ -173,12 +188,11 @@
     });
 
 
-
     $("#save").on("click", function () {
 
         // console.log($("#code").val())
 
-        $.post("/soft/ansible_write", {"code": $("#code").val(),"path": $("#path").val()}, function (data, status) {
+        $.post("/soft/ansible_write", {"code": $("#code").val(), "path": $("#path").val()}, function (data, status) {
 
 
             console.log(data);
@@ -187,23 +201,33 @@
     });
 
 
-    var servermsg = document.getElementById("servermsg");
-
     var ws = new WebSocket("ws://127.0.0.1:8080/soft/ws");
-    ws.onopen = function(){
-        servermsg.innerHTML = servermsg.innerHTML + "<br>Server connected";
+    ws.onopen = function () {
+
+        $("#servermsg").append("<br>Server connected <br>");
+
     };
-    ws.onmessage = function(e){
-        servermsg.innerHTML = servermsg.innerHTML + "<br><< Received data: " + e.data;
+    ws.onmessage = function (e) {
+
+        var ansi_up = new AnsiUp;
+
+        var html = ansi_up.ansi_to_html(e.data);
+
+
+        $("#servermsg").append(html + "<br>");
+
     };
-    ws.onclose = function(){
-        servermsg.innerHTML = servermsg.innerHTML + "<br>Server disconnected";
+    ws.onclose = function () {
+
+        $("#servermsg").append("<br>Server disconnected <br>");
     };
 
     $("#exec").on("click", function () {
 
-        ws.send(JSON.stringify({"path":$("#path").val()}));
-        servermsg.innerHTML = servermsg.innerHTML + "<br>>> Data sent: " + text;
+        ws.send(JSON.stringify({"path": $("#path").val()}));
+
+        $("#servermsg").append("<br>>> Data sent: " + $("#path").val());
+
 
     });
 

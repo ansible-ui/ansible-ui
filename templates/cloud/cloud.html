@@ -6,12 +6,7 @@
     <title>layout 后台大布局 - Layui</title>
     <link rel="stylesheet" type="text/css"
           href="{{ url('static', filename='layui/css/layui.css') }}"/>
-    <script type="text/javascript" src="{{ url('static', filename='win10/js/jquery-2.2.4.min.js') }}"></script>
-    <!--    <script src="/static/ace/jquery/jquery-1.8.3.min.js"></script>-->
-    <!--    <script src="/static/ace/ace/ace.js"></script>-->
-    <!--    <script src="/static/ace/ace/theme-twilight.js"></script>-->
-    <!--    <script src="/static/ace/ace/mode-sh.js"></script>-->
-    <!--    <script src="/static/ace/jquery-ace.min.js"></script>-->
+
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -77,9 +72,8 @@
             </div>
 
 
-
             <div class="layui-form-item" id="servermsg">
-<!--                <pre id="servermsg" class="ace_editor" style="min-height:100px"></pre>-->
+
             </div>
 
             <div class="layui-form-item">
@@ -93,13 +87,15 @@
     </div>
 
 </div>
+<script type="text/javascript" src="{{ url('static', filename='win10/js/jquery-2.2.4.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('static', filename='layui/layui.all.js') }}"></script>
+<script type="text/javascript" src="{{ url('static', filename='ansi_up.js') }}"></script>
 <script src="https://cdn.bootcss.com/ace/1.4.6/ace.js"></script>
 <script src="https://cdn.bootcss.com/ace/1.4.6/ext-language_tools.js"></script>
 <script src="https://cdn.bootcss.com/ace/1.4.6/theme-twilight.js"></script>
 <script src="https://cdn.bootcss.com/ace/1.4.6/theme-clouds.js"></script>
 <script src="https://cdn.bootcss.com/ace/1.4.6/mode-sh.js"></script>
-<script type="text/javascript" src="{{ url('static', filename='layui/layui.all.js') }}"></script>
-<script type="text/javascript" src="{{ url('static', filename='ansi_up.js') }}"></script>
+
 <script>
 
 
@@ -126,34 +122,6 @@
         enableSnippets: true,
         enableLiveAutocompletion: true
     });
-
-
-
-        //初始化对象
-   // let editor2 = ace.edit("servermsg");
-   //
-   //  //设置风格和语言（更多风格和语言，请到github上相应目录查看）
-   //  editor2.setTheme("ace/theme/twilight");
-   //  editor2.session.setMode("ace/mode/sh");
-   //
-   //  //字体大小
-   //  editor2.setFontSize(18);
-   //
-   //  //设置只读（true时只读，用于展示代码）
-   //  editor2.setReadOnly(false);
-   //
-   //  //自动换行,设置为off关闭
-   //  editor2.setOption("wrap", "free")
-   //
-   //  //启用提示菜单
-   //  ace.require("ace/ext/language_tools");
-   //  editor2.setOptions({
-   //      enableBasicAutocompletion: true,
-   //      enableSnippets: true,
-   //      enableLiveAutocompletion: true
-   //  });
-
-     // editor2.session.setValue("exec log");
 
 
     $("#save").addClass("layui-btn-disabled");
@@ -243,36 +211,32 @@
     });
 
 
-    //var servermsg = document.getElementById("servermsg");
-
     var ws = new WebSocket("ws://127.0.0.1:8080/cloud/ws");
     ws.onopen = function () {
-        //servermsg.innerHTML = servermsg.innerHTML + "<br>Server connected";
-        //editor2.session.setValue("<br>Server connected");
+
+        $("#servermsg").append("<br>Server connected <br>");
+
     };
     ws.onmessage = function (e) {
 
-        //servermsg.innerHTML = servermsg.innerHTML + "<br><< Received data: " + e.data;
+        var ansi_up = new AnsiUp;
 
-          var ansi_up = new AnsiUp;
+        var html = ansi_up.ansi_to_html(e.data);
 
-  var html = ansi_up.ansi_to_html(e.data);
-
-         //editor2.insert( html);
 
         $("#servermsg").append(html + "<br>");
 
     };
     ws.onclose = function () {
-        //servermsg.innerHTML = servermsg.innerHTML + "<br>Server disconnected";
 
-        //editor2.session.setValue("<br>Server disconnected");
+        $("#servermsg").append("<br>Server disconnected <br>");
     };
 
     $("#exec").on("click", function () {
 
         ws.send(JSON.stringify({"path": $("#path").val()}));
-        //servermsg.innerHTML = servermsg.innerHTML + "<br>>> Data sent: " + $("#path").val();
+
+        $("#servermsg").append("<br>>> Data sent: " + $("#path").val());
 
     });
 
