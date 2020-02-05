@@ -154,7 +154,7 @@
 
                         // 设置隐藏域的值
                         $("#path").val(obj.data.path);
-                        $("#code").val("");
+
 
                         // 远程获取文件内容 并显示
                         $.post("/soft/ansible_read", {"filename": obj.data.path}, function (data, status) {
@@ -226,7 +226,7 @@
 
         ws.send(JSON.stringify({"path": $("#path").val()}));
 
-        $("#servermsg").append("<br>>> Data sent: " + $("#path").val());
+        $("#servermsg").append("<br>>> Data sent: " + $("#path").val() + "<br>");
 
 
     });

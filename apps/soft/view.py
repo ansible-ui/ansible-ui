@@ -58,9 +58,9 @@ async def ws_ansible_run(request):
     ws = web.WebSocketResponse()
     await ws.prepare(request)
     async for msg in ws:
-        print(msg)
+
         if msg.type == aiohttp.WSMsgType.TEXT:
-            print(msg.data)
+
             if msg.data == 'close':
                 await ws.close()
             else:
@@ -68,18 +68,28 @@ async def ws_ansible_run(request):
 
                 import subprocess
                 import subprocess, shlex
-                command = "ansible -i {}/playbooks/hosts all -m ping".format(request.app['BASE_DIR'])
-                p = subprocess.Popen(shlex.split(command), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                # 为子进程传递参数
-                # p.stdin.write('5\n') 
+
+                data2 = json.loads(msg.data)
+                work_path = os.path.dirname(os.path.abspath(data2['path']))
+
+                command = "ansible -i hosts all -m ping"
+                p = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE,
+                                     stderr=subprocess.STDOUT,cwd=work_path )
                 # 实时获取输出
                 while p.poll() == None:
                     out = p.stdout.readline().strip()
+
+                    err = p.stderr
+
+                    if err:
+                        print("sub process err: ", err)
+                        
                     if out:
                         print("sub process output: ", out)
                         await ws.send_str(out.decode(encoding='utf-8', errors='strict'))
+
                 # 子进程返回值
-                print ("return code: ", p.returncode)
+                await ws.send_str("return code: {} ".format(p.returncode) )
 
                         
 
