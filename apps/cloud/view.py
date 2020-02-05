@@ -81,17 +81,24 @@ async def ws_terraform_run(request):
 
                 import subprocess
                 import subprocess, shlex
-                command = "terraform plan"
+                command = "terraform apply -auto-approve"
 
-                p = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE,
+
+                p = subprocess.Popen(shlex.split(command),
+                                     stdin=subprocess.PIPE,
+                                     stdout=subprocess.PIPE,
                                      stderr=subprocess.STDOUT,cwd=work_path )
+
+
                 # 实时获取输出
                 while p.poll() == None:
                     out = p.stdout.readline().strip()
 
                     if out:
                         print("sub process output: ", out)
-                        await ws.send_str(out.decode(encoding='utf-8', errors='strict'))
+
+                        result  = out.decode(encoding='utf-8', errors='strict')
+                        await ws.send_str(result)
 
                 # 子进程返回值
                 await ws.send_str("return code: {} ".format(p.returncode) )

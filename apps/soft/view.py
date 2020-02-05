@@ -83,7 +83,7 @@ async def ws_ansible_run(request):
 
                     if err:
                         print("sub process err: ", err)
-                        
+
                     if out:
                         print("sub process output: ", out)
                         await ws.send_str(out.decode(encoding='utf-8', errors='strict'))
