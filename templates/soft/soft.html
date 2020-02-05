@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 后台大布局 - Layui</title>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url('static', filename='layui/css/layui.css') }}"/>
+    <script src="/static/ace/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/static/ace/ace/ace.js"></script>
+    <script src="/static/ace/ace/theme-twilight.js"></script>
+    <script src="/static/ace/ace/mode-sh.js"></script>
+    <script src="/static/ace/jquery-ace.min.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <!-- <ul class="layui-nav layui-layout-left">
+          <li class="layui-nav-item"><a href="">控制台</a></li>
+          <li class="layui-nav-item"><a href="">商品管理</a></li>
+          <li class="layui-nav-item"><a href="">用户</a></li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">其它系统</a>
+            <dl class="layui-nav-child">
+              <dd><a href="">邮件管理</a></dd>
+              <dd><a href="">消息管理</a></dd>
+              <dd><a href="">授权管理</a></dd>
+            </dl>
+          </li>
+        </ul> -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                    <dd><a href="">退出</a></dd>
+                </dl>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="layui-side">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <div id="test7" class="demo-tree"></div>
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                <legend>开启节点操作图标</legend>
+            </fieldset>
+
+            <div id="test9" class="demo-tree demo-tree-box"
+                 style="width: 200px; height: 300px; overflow: scroll;"></div>
+
+
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+
+            <form class="layui-form" action=""></form>
+
+            <div class="layui-form-item">
+                <button type="button" class="layui-btn" lay-submit="" id="save">修改保存</button>
+
+                 <button type="button" class="layui-btn" lay-submit="" id="exec">执行任务</button>
+
+                <input type="input" id="path" name="path" value="0" hidden/>
+            </div>
+            <div id="servermsg"><h1>Message log:</h1></div>
+            <div class="layui-form-item">
+                <textarea name="code" id="code" class="my-code-area" rows="200" style="width: 100%"></textarea>
+            </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="{{ url('static', filename='layui/layui.all.js') }}"></script>
+<script>
+
+    $("#save").addClass("layui-btn-disabled");
+    $("#exec").addClass("layui-btn-disabled");
+
+    $('.my-code-area').ace({theme: 'twilight', lang: 'sh'});
+
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
+    layui.use(['tree', 'util'], function () {
+
+        var tree = layui.tree
+            , layer = layui.layer
+            , util = layui.util;
+
+        $.get("/soft/ansible_list", function (data, status) {
+
+            //开启节点操作图标
+            tree.render({
+                //showCheckbox: true,//显示多选框
+                showSearch: true,//显示搜索框
+                accordion: true,//手风琴模式
+                drag: true,//拖拽
+                elem: '#test9'
+                , data: data
+                , edit: ['add', 'update', 'del'] //操作节点的图标
+                , click: function (obj) {
+
+
+                    if (obj.data.type == "file") {
+
+                        // 可用
+                        $("#save").removeClass("layui-btn-disabled");
+                        $("#exec").removeClass("layui-btn-disabled");
+
+                        // 设置隐藏域的值
+                        $("#path").val(obj.data.path);
+                        $("#code").val("");
+
+                        // 远程获取文件内容 并显示
+                        $.post("/soft/ansible_read", {"filename": obj.data.path}, function (data, status) {
+
+                            let text = ""
+                            $.each(data.data,function (k,v) {
+                                 //
+                                 // console.log(k);
+                                 //  console.log(v);
+
+                                  text = text + v;
+                            })
+
+                            var decorator = $('.my-code-area').data('ace');
+                            var aceInstance = decorator;
+                            //var text = JSON.stringify(data, "\n", '\t');
+
+                            if (aceInstance != null) {
+                                aceInstance.destroy();
+
+                            }
+
+                            aceInstance.create();
+                                aceInstance.editor.theme('twilight');
+                                aceInstance.editor.lang('sh');
+                                aceInstance.editor.value(text);
+
+
+                        });
+
+                    }
+                    //console.log(obj.data);
+
+
+                    //layer.msg(JSON.stringify(obj.data));
+
+
+                }
+            });
+        });
+
+
+    });
+
+
+
+    $("#save").on("click", function () {
+
+        // console.log($("#code").val())
+
+        $.post("/soft/ansible_write", {"code": $("#code").val(),"path": $("#path").val()}, function (data, status) {
+
+
+            console.log(data);
+
+        });
+    });
+
+
+    var servermsg = document.getElementById("servermsg");
+
+    var ws = new WebSocket("ws://127.0.0.1:8080/soft/ws");
+    ws.onopen = function(){
+        servermsg.innerHTML = servermsg.innerHTML + "<br>Server connected";
+    };
+    ws.onmessage = function(e){
+        servermsg.innerHTML = servermsg.innerHTML + "<br><< Received data: " + e.data;
+    };
+    ws.onclose = function(){
+        servermsg.innerHTML = servermsg.innerHTML + "<br>Server disconnected";
+    };
+
+    $("#exec").on("click", function () {
+
+        ws.send(JSON.stringify({"path":$("#path").val()}));
+        servermsg.innerHTML = servermsg.innerHTML + "<br>>> Data sent: " + text;
+
+    });
+
+</script>
+</body>
+</html>

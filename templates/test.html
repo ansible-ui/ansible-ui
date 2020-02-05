@@ -1,0 +1,17 @@
+<h1>username:</h1>{{ name }}
+<h1>age:</h1>{{ age }}
+<a href="#" id="test" onclick="return false;">ssss</a>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $("#test").click(function(){
+     
+        $.get('/intro',function(data,status){
+
+                console.log(data);
+        });
+  });
+});
+</script>
