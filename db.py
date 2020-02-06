@@ -14,11 +14,12 @@ async def init_pg(app):
 
     engine = motor.motor_asyncio.AsyncIOMotorClient("127.0.0.1", 27017)
 
+    app['cmdb_con'] = engine
     app['cmdb'] = engine["test"]
 
 
 async def close_pg(app):
-    # app['cmdb'].close()
-    # await app['cmdb'].wait_closed()
-    pass
+    app['cmdb_con'].close()
+    # await app['cmdb_con'].wait_closed()
+
 
