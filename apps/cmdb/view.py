@@ -137,3 +137,33 @@ async def handle_servers_list(request):
         ]
     }
     return web.json_response(result)
+
+
+
+
+async def handle_crontab_task(request):
+
+    params = {"cloud":"amazon","game":"auror","region":"us-east-1"}
+    from cloud.api import api
+    t1 = api(params['cloud'], 'get_rds', {"profile_name": params['game'], "region_name": params['region']})
+    data1 = t1.get_result()
+
+    t2 = api(params['cloud'], 'get_servers', {"profile_name": params['game'], "region_name": params['region']})
+    data2 = t2.get_result()
+
+    t3 = api(params['cloud'], 'get_balancers', {"profile_name": params['game'], "region_name": params['region']})
+    data3 = t3.get_result()
+
+    data = data1 + data2 + data3
+
+    for server in data:
+        print(server)
+        # r = AssetsDao.get({"server_sn": server['server_sn']})
+        # if r == None:
+        #
+        #     AssetsDao.insert(server)
+        # else:
+        #
+        #     AssetsDao.update({"server_sn": server['server_sn']}, server)
+
+    return web.json_response(data)

@@ -31,7 +31,9 @@ def setup_routes(app):
     app.router.add_get('/soft/ws', ws_ansible_run)
 
     app.router.add_get('/cmdb', handler_cmdb),
-    app.router.add_route('GET', '/cmdb/servers_list', handle_servers_list),
+    app.router.add_get('/cmdb/servers_list', handle_servers_list),
+    app.router.add_get('/cmdb/crontab_task', handle_crontab_task),
+
 
     # app.router.add_get('/session', handler_session),
 

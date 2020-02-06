@@ -18,6 +18,7 @@ async def init_pg(app):
 
 
 async def close_pg(app):
-    app['cmdb'].close()
-    await app['cmdb'].wait_closed()
+    # app['cmdb'].close()
+    # await app['cmdb'].wait_closed()
+    pass
 
