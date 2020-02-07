@@ -30,7 +30,7 @@ async def handler_cloud(request):
     return {'name': 'Andrew', 'age': 'Svetlov'}
 
 
-def handle_terraform_list(request):
+def handler_terraform_list(request):
 
 
     root_dir = request.app['BASE_DIR']
@@ -41,14 +41,14 @@ def handle_terraform_list(request):
     return web.json_response(result)
 
 
-async def handle_terraform_read(request):
+async def handler_terraform_read(request):
     post = await request.post()
 
     data = read_t_file(post['filename'])
     return web.json_response({"code": 1, "data": data})
 
 
-async def handle_terraform_write(request):
+async def handler_terraform_write(request):
     post = await request.post()
 
     data = write_t_file(post['path'], post['code'])

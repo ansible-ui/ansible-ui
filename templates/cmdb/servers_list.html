@@ -48,20 +48,18 @@
         <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">所有商品</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="javascript:;">列表三</a></dd>
-            <dd><a href="">超链接</a></dd>
+            <dd><a href="/cmdb/servers_list">服务器列表</a></dd>
+            <dd><a href="/cmdb/database_list">数据库列表</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item">
-          <a href="javascript:;">解决方案</a>
-          <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="">超链接</a></dd>
-          </dl>
-        </li>
+<!--        <li class="layui-nav-item">-->
+<!--          <a href="javascript:;">解决方案</a>-->
+<!--          <dl class="layui-nav-child">-->
+<!--            <dd><a href="javascript:;">列表一</a></dd>-->
+<!--            <dd><a href="javascript:;">列表二</a></dd>-->
+<!--            <dd><a href="/cmdb/database_list">超链接</a></dd>-->
+<!--          </dl>-->
+<!--        </li>-->
 
       </ul>
     </div>
@@ -108,7 +106,7 @@ layui.use('table', function(){
   
   table.render({
     elem: '#test'
-    ,url:'/cmdb/servers_list'
+    ,url:'/cmdb/servers_list_data'
     ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
     ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
       title: '提示'

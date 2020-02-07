@@ -21,12 +21,16 @@ import aiohttp_jinja2
 import jinja2
 
 
-@aiohttp_jinja2.template('cmdb.html')
-async def handler_cmdb(request):
+@aiohttp_jinja2.template('cmdb/servers_list.html')
+async def handler_servers_list(request):
+    return {'name': 'Andrew', 'age': 'Svetlov'}
+
+@aiohttp_jinja2.template('cmdb/database_list.html')
+async def handler_database_list(request):
     return {'name': 'Andrew', 'age': 'Svetlov'}
 
 
-async def handle_servers_list(request):
+async def handler_servers_list_data(request):
     cmdb = request.app['cmdb']
     server_count = await  cmdb.assets.count_documents({})
 
@@ -51,7 +55,32 @@ async def handle_servers_list(request):
     return web.json_response(result)
 
 
-async def handle_crontab_task(request):
+async def handler_database_list_data(request):
+    cmdb = request.app['cmdb']
+    server_count = await  cmdb.assets.count_documents({})
+
+    cursor = cmdb.assets.find({"root": "database"})
+
+    cursor.skip(1).limit(2)
+
+    data = []
+    async for document in cursor:
+
+        if document.get('_id'):
+            del document['_id']
+        data.append(document)
+
+    result = {
+        "code": 0,
+        "msg": "",
+        "count": server_count,
+        "data": data
+    }
+
+    return web.json_response(result)
+
+
+async def handler_crontab_task(request):
     cmdb = request.app['cmdb']
     params = {"cloud": "amazon", "game": "auror", "region": "us-east-1"}
 

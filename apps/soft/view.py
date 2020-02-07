@@ -29,7 +29,7 @@ async def handler_soft(request):
 
 
 
-def handle_ansible_list(request):
+def handler_ansible_list(request):
 
     root_dir = request.app['BASE_DIR']
     dir_path = "{}/ansible_playbooks".format(root_dir)
@@ -39,14 +39,14 @@ def handle_ansible_list(request):
     return web.json_response(result)
 
 
-async def handle_ansible_read(request):
+async def handler_ansible_read(request):
     post = await request.post()
 
     data = read_t_file(post['filename'])
     return web.json_response({"code": 1, "data": data})
 
 
-async def handle_ansible_write(request):
+async def handler_ansible_write(request):
     post = await request.post()
 
     data = write_t_file(post['path'], post['code'])
