@@ -10,6 +10,8 @@ from apps.win10.view import *
 from apps.cloud.view import *
 from apps.soft.view import *
 from apps.cmdb.view import *
+from apps.web.view import *
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -37,6 +39,7 @@ def setup_routes(app):
     app.router.add_get('/cmdb/servers_list_data', handler_servers_list_data),
     app.router.add_get('/cmdb/crontab_task', handler_crontab_task),
 
+    app.router.add_get('/web', handler_web),
 
     # app.router.add_get('/session', handler_session),
 
