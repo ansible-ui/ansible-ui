@@ -94,6 +94,6 @@
             $(elem).find('.layui-carousel-arrow[lay-type=sub]').trigger('click');
         }
     };
-    layui.link('../step/step-lay/step.css');
+    layui.link('/static/layui_exts/step-lay/step.css');
     exports('step', step);
 });
