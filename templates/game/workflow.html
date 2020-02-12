@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flowchart</title>
+    <meta name="description" content="交互式流程图设计器" />
+    <meta charset="UTF-8">
+    <link href="http://gojs.net.cn/extensions/DataInspector.css" rel="stylesheet" type="text/css">
+    <script src="http://gojs.net.cn/extensions/DataInspector.js"></script>
+      <script type="text/javascript" src="{{ url('static', filename='gojs/gojs.all.js') }}"></script>
+      <script type="text/javascript" src="{{ url('static', filename='custom/game/workflow.js') }}"></script>
+
+  </head>
+<body>
+<div id="sample" style="margin: 0 auto;" >
+  <div style="width: 100%; display: flex; justify-content: space-between">
+    <div id="myPaletteDiv" style="width: 150px; margin-right: 2px; background-color: whitesmoke; border: solid 1px black"></div>
+    <div id="myDiagramDiv" style="flex-grow: 1;position: relative; overflow: hidden; height: 650px; border: solid 1px black"></div>
+  </div>
+  <div id="myInspectorDiv" class="inspector" style="position:fixed;top:0; right:0; z-index: 9999">
+    <table>
+        <tbody>
+        <tr>
+            <td>text</td>
+            <td><input type="undefined" tabindex="0"></td>
+        </tr>
+        <tr>
+            <td>key</td>
+            <td><input type="undefined" tabindex="1" disabled=""></td>
+        </tr>
+        <tr>
+            <td>color</td>
+            <td><input type="color" tabindex="2"></td>
+        </tr>
+        <tr>
+            <td>Comments</td>
+            <td><input type="undefined" tabindex="3"></td>
+        </tr>
+        <tr>
+            <td>flag</td>
+            <td><input type="checkbox" tabindex="4"></td>
+        </tr>
+        <tr>
+            <td>state</td>
+            <td><select tabindex="5">
+                <option>one</option>
+                <option>two</option>
+                <option>three</option>
+                <option>four</option>
+                <option>five</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td>loc</td>
+            <td><input tabindex="6"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+  <button id="saveButton">保存</button>
+  <button id="loadButton">加载</button>
+
+  <textarea id="mySavedModel" style="width:100%;height:300px;display: none;">
+  </textarea>
+  <button id="printButton">用SVG打印</button>
+</div>
+</body>
+</html>

@@ -11,7 +11,7 @@ from apps.cloud.view import *
 from apps.soft.view import *
 from apps.cmdb.view import *
 from apps.web.view import *
-
+from apps.game.view import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -41,8 +41,11 @@ def setup_routes(app):
 
     app.router.add_get('/web', handler_web),
 
-    # app.router.add_get('/session', handler_session),
+    app.router.add_get('/game', handler_game),
+    app.router.add_get('/cmdb/servers_list', handler_game),
+    app.router.add_get('/game/workflow', handler_game_workflow),
 
+    # app.router.add_get('/session', handler_session),
     # app.router.add_get('/', index)
     # app.router.add_get('/poll/{question_id}', poll, name='poll')
     # app.router.add_get('/poll/{question_id}/results',
