@@ -19,12 +19,31 @@
                 <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
                     <div carousel-item>
                         <div>
-                            <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+
+
+                            <form class="layui-form" style="margin: 0 auto;padding-top: 40px;">
+
+
+                                  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">验证手机</label>
+      <div class="layui-input-inline">
+        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <label class="layui-form-label">验证邮箱</label>
+      <div class="layui-input-inline">
+        <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+  </div>
+
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">游戏ID:</label>
                                     <div class="layui-input-block">
                                         <input type="text" placeholder="请填写入款人游戏ID" class="layui-input" lay-verify="number" required />
-    
+
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
