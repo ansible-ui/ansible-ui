@@ -3,3 +3,4 @@
 terraform_playbooks
 ansible_playbooks
 .vscode/
+.env
