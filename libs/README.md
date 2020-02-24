@@ -39,5 +39,6 @@
         web.logging.getLogger('Notify Error').error(e)
     ```
 
-😄 **Have FUN , Fork It**
+😄 **Have FUN**
 
+![Fork You](https://camo.githubusercontent.com/af66ed3ad2d9fd159b9f5fdc92ba0a1804cff642/68747470733a2f2f692e696d6775722e636f6d2f4766746846417a2e706e67)
