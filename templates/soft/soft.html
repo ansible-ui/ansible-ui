@@ -37,6 +37,7 @@
 
                 <button type="button" class="layui-btn" lay-submit="" id="exec">执行任务</button>
 
+
                 <input type="input" id="path" name="path" value="0" hidden/>
             </div>
             <div class="layui-form-item" id="servermsg">
@@ -203,11 +204,12 @@
 
     $("#exec").on("click", function () {
 
-        ws.send(JSON.stringify({"path": $("#path").val()}));
+        // ws.send(JSON.stringify({"path": $("#path").val()}));
+        //
+        // $("#servermsg").append("<br>>> Data sent: " + $("#path").val() + "<br>");
 
-        $("#servermsg").append("<br>>> Data sent: " + $("#path").val() + "<br>");
 
-
+        window.location ="/soft/workflow";
     });
 
 </script>

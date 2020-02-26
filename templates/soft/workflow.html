@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flowchart</title>
+    <meta name="description" content="交互式流程图设计器" />
+    <meta charset="UTF-8">
+          <link rel="stylesheet" type="text/css"
+          href="{{ url('static', filename='layui/css/layui.css') }}"/>
+    <link href="http://gojs.net.cn/extensions/DataInspector.css" rel="stylesheet" type="text/css">
+    <script src="http://gojs.net.cn/extensions/DataInspector.js"></script>
+      <script type="text/javascript" src="{{ url('static', filename='gojs/gojs.all.js') }}"></script>
+      <script type="text/javascript" src="{{ url('static', filename='custom/game/workflow.js') }}"></script>
+
+  </head>
+<body>
+<div class="layui-fluid pitaya-layui-fluid">
+
+         <div class="layui-card pitaya-layui-card">
+
+                 <header class="layui-card-header pitaya-layui-card-header">
+
+		            <button  class="layui-btn layui-btn-sm pitaya-btn layui-btn-normal" id="saveButton">保存画布</button>
+                      <button  class="layui-btn layui-btn-sm pitaya-btn layui-btn-normal" id="loadButton">加载数据</button>
+                        <button  class="layui-btn layui-btn-sm pitaya-btn layui-btn-normal" id="printButton">用SVG打印</button>
+		        </header>
+
+              <section class="layui-card-body pitaya-card-body">
+
+                  <div class="layui-col-md3 layui-col-lg2 pitaya-card-left">
+		                <div class="layui-card pitaya-left-tree">
+		                    <div class="layui-card-header pitaya-layui-card-header  pitaya-title" title="工具栏">
+		                       工具栏
+		                    </div>
+		                    <div class="layui-card-body pitaya-card-body">
+		                    	<div id="myPaletteDiv" style=" overflow: hidden; height: 650px;width: 200px; margin-right: 2px; background-color: whitesmoke; border: solid 1px black"></div>
+		                    </div>
+		                </div>
+		            </div>
+
+                         <div class="layui-col-md9 layui-col-lg10 pitaya-card-right">
+		                <div class="layui-card pitaya-full">
+		                    <div class="layui-card-header pitaya-layui-card-header  pitaya-title">
+		                        我是画布名称
+		                    </div>
+		                    <div class="layui-card-body pitaya-card-table pitaya-defined-padding">
+                                <div id="myDiagramDiv" style="flex-grow: 1;position: relative; overflow: hidden; height: 650px; border: solid 1px black"></div>
+		                    </div>
+		                </div>
+					</div>
+
+
+
+              </section>
+              <div id="myInspectorDiv" class="inspector" style="position:fixed;top:50px; right:40px; z-index: 9999">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>text</td>
+                        <td><input type="undefined" tabindex="0"></td>
+                    </tr>
+                    <tr>
+                        <td>key</td>
+                        <td><input type="undefined" tabindex="1" disabled=""></td>
+                    </tr>
+                    <tr>
+                        <td>color</td>
+                        <td><input type="color" tabindex="2"></td>
+                    </tr>
+                    <tr>
+                        <td>Comments</td>
+                        <td><input type="undefined" tabindex="3"></td>
+                    </tr>
+                    <tr>
+                        <td>flag</td>
+                        <td><input type="checkbox" tabindex="4"></td>
+                    </tr>
+                    <tr>
+                        <td>state</td>
+                        <td><select tabindex="5">
+                            <option>one</option>
+                            <option>two</option>
+                            <option>three</option>
+                            <option>four</option>
+                            <option>five</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>loc</td>
+                        <td><input tabindex="6"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+              <textarea id="mySavedModel" style="width:100%;height:300px;display: none;">
+              </textarea>
+
+         </div>
+
+</div>
+</body>
+</html>

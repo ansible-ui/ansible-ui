@@ -23,6 +23,9 @@ def get_files_data(dirpath, jsonlist):
     index = 0
     for root, dirs, files in os.walk(dirpath):
 
+        files = [f for f in files if not f[0] == '.']
+        dirs[:] = [d for d in dirs if not d[0] == '.']
+        
         for d in dirs:
 
             if d[0] == ".": continue
