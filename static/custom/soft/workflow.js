@@ -384,10 +384,10 @@ window.onload = function () {
             "modelData": {"test":true, "hello":"world", "version":42},
             "nodeDataArray": [
                 {"category": "Start", "text": "开始", "key": 1, "loc": "88 37"},
-                {"text": "烧开水", "key": 2, "loc": "88 114","data":"xxxx"},
+                {"text": "烧开水", "key": 2, "loc": "88 114","data":"aaa"},
                 {"category": "Conditional", "text": "水是否烧开", "key": 3, "loc": "88 210"},
-                {"text": "下面条", "key": 4, "loc": "87 307","data":"xxxx"},
-                {"text": "等待3分钟", "key": 5, "loc": "87 375","data":"xxxx"},
+                {"text": "下面条", "key": 4, "loc": "87 307","data":"bbb"},
+                {"text": "等待3分钟", "key": 5, "loc": "87 375","data":"cccc"},
                 {"category": "End", "text": "结束", "key": 6, "loc": "87 445"}
             ],
             "linkDataArray": [
@@ -402,7 +402,7 @@ window.onload = function () {
     );
 
     // 属于表格
-    var inspector = new Inspector('myInspectorDiv', myDiagram,
+    new Inspector('myInspectorDiv', myDiagram,
         {
             // allows for multiple nodes to be inspected at once
             multipleSelection: true,
@@ -438,18 +438,56 @@ window.onload = function () {
             }
         });
 
- 
-    document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+
+   // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
 
     // 将go模型以JSon格式保存在文本框内
     document.getElementById("saveButton").addEventListener("click", function () {
-        document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+
+
+    initCode=null;
+      var key_one=false,key_two=false;
+      for(arr in myDiagram.model.nodeDataArray){
+
+        if(myDiagram.model.nodeDataArray[arr].text==='开始'){
+          key_one=true;
+        }
+        if(myDiagram.model.nodeDataArray[arr].text==='结束'){
+          key_two=true;
+        }
+      }
+      if(key_one && key_two){
+        initCode = myDiagram.model.toJson();
+        /*缓存*/
+        if(window.localStorage){
+          var wLocal=window.localStorage;
+            wLocal.saveModel= myDiagram.model.toJson();
+        }else{
+          console.log('请使用高版本浏览器');
+        }
         myDiagram.isModified = false;
+      }else{
+        alert('保存失败!开始按钮和结束按钮必须存在');
+      }
+
+        // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+        // myDiagram.isModified = false;
     });
 
     // 读取文本框内JSon格式的内容，并转化为gojs模型
     document.getElementById("loadButton").addEventListener("click", function () {
-        myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+        //myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+
+          /*缓存*/
+      if(window.localStorage){
+          if(window.localStorage.saveModel){
+            initCode=window.localStorage.saveModel;
+          }
+      }else{
+        console.log('请使用高版本浏览器');
+      }
+      myDiagram.model = go.Model.fromJson(initCode);
+
     });
 
     // 在新窗口中将图形转化为SVG，并分页打印
@@ -473,6 +511,8 @@ window.onload = function () {
             svgWindow.print();
         }, 1);
     });
+
+
 
 } // windows.onload
 
