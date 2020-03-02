@@ -27,6 +27,10 @@ async def handler_soft(request):
     return {'name': 'Andrew', 'age': 'Svetlov'}
 
 
+@aiohttp_jinja2.template('soft/workflow.html')
+async def handler_soft_workflow(request):
+    return {'name': 'Andrew', 'age': 'Svetlov'}
+
 
 
 def handler_ansible_list(request):

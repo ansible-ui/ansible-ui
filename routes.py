@@ -30,7 +30,9 @@ def setup_routes(app):
     app.router.add_get('/soft/ansible_list', handler_ansible_list),
     app.router.add_post('/soft/ansible_read', handler_ansible_read),
     app.router.add_post('/soft/ansible_write', handler_ansible_write),
+    app.router.add_get('/soft/workflow', handler_soft_workflow)
     app.router.add_get('/soft/ws', ws_ansible_run)
+
 
     app.router.add_get('/cmdb', handler_servers_list),
     app.router.add_get('/cmdb/database_list', handler_database_list),
