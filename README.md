@@ -4,7 +4,8 @@
 
 ### 软件环境
 
-    python3
+    golang (terraform)
+    python3 (ansible)
     mongodb
 
 ### 环境准备
