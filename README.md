@@ -1,16 +1,27 @@
-# keiTang
+# macross
 
+
+
+### 软件环境
+
+    python3
+    mongodb
 
 ### 环境准备
 
     pip3 install -r requirements.txt
+    
   
-### 运行
+###  clone 仓库
 
+    git clone  git@github.com:multi-cloud-devops/terraform_workspace.git /data
+    git clone  git@github.com:multi-cloud-devops/ansible_workspace.git /data
+    git clone  git@github.com:multi-cloud-devops/macross.git /data
+    
+### web运行
    
-    python3 main.py
+    cd /data/macross && python3 main.py
    
-  
     
 ### 预览
 
@@ -22,7 +33,13 @@
 ![image](https://github.com/multi-cloud-devops/keiTang/blob/master/3.png)
 
 
-### 运行方式2
+
+
+
+
+
+
+### pipenv环境下运行 
 
 #### 代码依赖库
 ```

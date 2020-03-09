@@ -180,9 +180,9 @@
 
     $("#save").on("click", function () {
 
-        // console.log($("#code").val())
+         console.log(editor.session.getValue());
 
-        $.post("/cloud/terraform_write", {"code": $("#code").val(), "path": $("#path").val()}, function (data, status) {
+        $.post("/cloud/terraform_write", {"code": editor.session.getValue(), "path": $("#path").val()}, function (data, status) {
 
 
             console.log(data);

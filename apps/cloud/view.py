@@ -32,7 +32,7 @@ async def handler_cloud(request):
 
 def handler_terraform_list(request):
 
-    dir_path =  request.app['config'].get_terraform_workspace()
+    dir_path =  request.app['settings'].terraform_workspace
 
     result = get_tree(dir_path)
 
