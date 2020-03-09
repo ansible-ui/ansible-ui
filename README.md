@@ -38,9 +38,15 @@
 
 
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
-### pipenv环境下运行 
+# 第二种运行方式(pipenv) 
 
 #### 代码依赖库
 ```
@@ -56,27 +62,28 @@ Jinja2 = "==2.10.3"
 cryptography = "==2.8"
 ```
 
-1. 安装 `pipenv`
+####  1. 安装 `pipenv`
    ```shell
    $ pip3 install pipenv
    ```
-2. 初始化环境 
+#### 2. 初始化环境 
    ```shell
    # python3 环境 如果是2.7 pipenv install --two
    $ pipenv install --three
    ```
    ⌛️。。。。
-3. 进入虚拟环境
+#### 3. 进入虚拟环境
    ```shell
    $ pipenv shell 
    ```
     也可以不进入，执行命令 `pipenv run `
-4. 启动环境
-   1. 进入虚拟环境之后，执行`python main.py`
-   2. 虚拟环境外执行，`pipenv run python main.py`
+#### 4. 启动环境
 
-5. 查看当前环境，依赖的环境
-   1. `pipenv graph`
+    1. 进入虚拟环境之后，执行`python main.py`
+    2. 虚拟环境外执行，`pipenv run python main.py`
+
+#### 5. 查看当前环境，依赖的环境
+    1. `pipenv graph`
 
 
 ### 其他依赖文档
