@@ -32,9 +32,7 @@ async def handler_cloud(request):
 
 def handler_terraform_list(request):
 
-
-    root_dir = request.app['BASE_DIR']
-    dir_path = "{}/terraform_playbooks".format(root_dir)
+    dir_path =  request.app['config'].get_terraform_workspace()
 
     result = get_tree(dir_path)
 
