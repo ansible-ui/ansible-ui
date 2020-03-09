@@ -35,8 +35,7 @@ async def handler_soft_workflow(request):
 
 def handler_ansible_list(request):
 
-    root_dir = request.app['BASE_DIR']
-    dir_path = "{}/ansible_playbooks".format(root_dir)
+    dir_path =  request.app['config'].get_ansible_workspace()
 
     result = get_tree(dir_path)
 

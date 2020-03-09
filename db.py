@@ -1,18 +1,10 @@
 import motor.motor_asyncio
 
 async def init_pg(app):
-    # conf = app['config']['postgres']
-    # engine = await aiopg.sa.create_engine(
-    #     database=conf['database'],
-    #     user=conf['user'],
-    #     password=conf['password'],
-    #     host=conf['host'],
-    #     port=conf['port'],
-    #     minsize=conf['minsize'],
-    #     maxsize=conf['maxsize'],
-    # )
 
-    engine = motor.motor_asyncio.AsyncIOMotorClient("127.0.0.1", 27017)
+    host = app['settings'].mongodb_config['host']
+    port = app['settings'].mongodb_config['port']
+    engine = motor.motor_asyncio.AsyncIOMotorClient(host, port)
 
     app['cmdb_con'] = engine
     app['cmdb'] = engine["test"]
