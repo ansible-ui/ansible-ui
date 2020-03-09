@@ -15,6 +15,33 @@ window.onload = function () {
         );
 
 
+    // 点击画布空白区域
+    myDiagram.addDiagramListener("BackgroundSingleClicked", function (e) {
+
+        document.getElementById("myInspectorDiv").style.visibility = "hidden";
+
+    });
+
+
+    myDiagram.addDiagramListener("ObjectSingleClicked", function (e) {
+
+        const part = e.subject.part;
+
+          var key = part.data.key;
+            var text = part.part.data.text;
+
+        console.warn(key);
+        console.warn(text);
+
+        if (part instanceof go.Node) { // 点击的是节点
+            document.getElementById("myInspectorDiv").style.visibility = "visible";
+        } else {
+            document.getElementById("myInspectorDiv").style.visibility = "hidden";
+
+        }
+    });
+
+
     // 当图有改动时，在页面标题后加*，且启动保存按钮
     myDiagram.addDiagramListener("Modified", function (e) {
         var button = document.getElementById("SaveButton");
@@ -29,6 +56,7 @@ window.onload = function () {
             if (idx >= 0) document.title = document.title.substr(0, idx);
         }
     });
+
 
     // 设置节点位置风格，并与模型"loc"属性绑定，该方法会在初始化各种节点模板时使用
     function nodeStyle() {
@@ -117,6 +145,7 @@ window.onload = function () {
                         editable: true  // 文字可编辑
                     },
                     new go.Binding("data").makeTwoWay()),  // 双向绑定模型中"text"属性
+
             ),
 
             // 上、左、右可以入，左、右、下可以出
@@ -366,7 +395,7 @@ window.onload = function () {
                 groupTemplateMap: myDiagram.groupTemplateMap,    // 同myDiagram公用一种node节点模板
                 model: new go.GraphLinksModel([  // 初始化Palette面板里的内容
                     {category: "Start", text: "开始"},
-                    {text: "步骤1",data: '{"likes": {$gt:50}, $or: [{"user": "usr001"},{"title": "title01"}]}'},
+                    {text: "步骤1", data: '{"likes": {$gt:50}, $or: [{"user": "usr001"},{"title": "title01"}]}'},
                     {category: "Conditional", text: "条件1"},
                     {category: "End", text: "结束"},
                     {category: "Comment", text: "注释"},
@@ -375,19 +404,20 @@ window.onload = function () {
                 ])
             });
 
+
     // 初始化模型范例
     myDiagram.model = go.Model.fromJson(
         {
             "class": "go.GraphLinksModel",
             "linkFromPortIdProperty": "fromPort",
             "linkToPortIdProperty": "toPort",
-            "modelData": {"test":true, "hello":"world", "version":42},
+            "modelData": {"test": true, "hello": "world", "version": 42},
             "nodeDataArray": [
                 {"category": "Start", "text": "开始", "key": 1, "loc": "88 37"},
-                {"text": "烧开水", "key": 2, "loc": "88 114","data":"aaa"},
+                {"text": "烧开水", "key": 2, "loc": "88 114", "data": "aaa"},
                 {"category": "Conditional", "text": "水是否烧开", "key": 3, "loc": "88 210"},
-                {"text": "下面条", "key": 4, "loc": "87 307","data":"bbb"},
-                {"text": "等待3分钟", "key": 5, "loc": "87 375","data":"cccc"},
+                {"text": "下面条", "key": 4, "loc": "87 307", "data": "bbb"},
+                {"text": "等待3分钟", "key": 5, "loc": "87 375", "data": "cccc"},
                 {"category": "End", "text": "结束", "key": 6, "loc": "87 445"}
             ],
             "linkDataArray": [
@@ -400,6 +430,7 @@ window.onload = function () {
             ]
         }
     );
+
 
     // 属于表格
     new Inspector('myInspectorDiv', myDiagram,
@@ -439,36 +470,36 @@ window.onload = function () {
         });
 
 
-   // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+    // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
 
     // 将go模型以JSon格式保存在文本框内
     document.getElementById("saveButton").addEventListener("click", function () {
 
 
-    initCode=null;
-      var key_one=false,key_two=false;
-      for(arr in myDiagram.model.nodeDataArray){
+        initCode = null;
+        var key_one = false, key_two = false;
+        for (arr in myDiagram.model.nodeDataArray) {
 
-        if(myDiagram.model.nodeDataArray[arr].text==='开始'){
-          key_one=true;
+            if (myDiagram.model.nodeDataArray[arr].text === '开始') {
+                key_one = true;
+            }
+            if (myDiagram.model.nodeDataArray[arr].text === '结束') {
+                key_two = true;
+            }
         }
-        if(myDiagram.model.nodeDataArray[arr].text==='结束'){
-          key_two=true;
+        if (key_one && key_two) {
+            initCode = myDiagram.model.toJson();
+            /*缓存*/
+            if (window.localStorage) {
+                var wLocal = window.localStorage;
+                wLocal.saveModel = myDiagram.model.toJson();
+            } else {
+                console.log('请使用高版本浏览器');
+            }
+            myDiagram.isModified = false;
+        } else {
+            alert('保存失败!开始按钮和结束按钮必须存在');
         }
-      }
-      if(key_one && key_two){
-        initCode = myDiagram.model.toJson();
-        /*缓存*/
-        if(window.localStorage){
-          var wLocal=window.localStorage;
-            wLocal.saveModel= myDiagram.model.toJson();
-        }else{
-          console.log('请使用高版本浏览器');
-        }
-        myDiagram.isModified = false;
-      }else{
-        alert('保存失败!开始按钮和结束按钮必须存在');
-      }
 
         // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
         // myDiagram.isModified = false;
@@ -478,15 +509,15 @@ window.onload = function () {
     document.getElementById("loadButton").addEventListener("click", function () {
         //myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
 
-          /*缓存*/
-      if(window.localStorage){
-          if(window.localStorage.saveModel){
-            initCode=window.localStorage.saveModel;
-          }
-      }else{
-        console.log('请使用高版本浏览器');
-      }
-      myDiagram.model = go.Model.fromJson(initCode);
+        /*缓存*/
+        if (window.localStorage) {
+            if (window.localStorage.saveModel) {
+                initCode = window.localStorage.saveModel;
+            }
+        } else {
+            console.log('请使用高版本浏览器');
+        }
+        myDiagram.model = go.Model.fromJson(initCode);
 
     });
 
@@ -511,7 +542,6 @@ window.onload = function () {
             svgWindow.print();
         }, 1);
     });
-
 
 
 } // windows.onload
