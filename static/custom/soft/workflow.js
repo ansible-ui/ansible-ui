@@ -414,19 +414,15 @@ window.onload = function () {
             "modelData": {"test": true, "hello": "world", "version": 42},
             "nodeDataArray": [
                 {"category": "Start", "text": "开始", "key": 1, "loc": "88 37"},
-                {"text": "烧开水", "key": 2, "loc": "88 114", "data": "aaa"},
-                {"category": "Conditional", "text": "水是否烧开", "key": 3, "loc": "88 210"},
-                {"text": "下面条", "key": 4, "loc": "87 307", "data": "bbb"},
-                {"text": "等待3分钟", "key": 5, "loc": "87 375", "data": "cccc"},
-                {"category": "End", "text": "结束", "key": 6, "loc": "87 445"}
+                {"text": "php", "key": 2, "loc": "88 114", "data": "aaa"},
+                {"text": "nginx", "key": 4, "loc": "88 307", "data": "bbb"},
+                {"category": "End", "text": "结束", "key": 6, "loc": "88 445"}
             ],
             "linkDataArray": [
                 {"from": 2, "to": 3, "fromPort": "B", "toPort": "T"},
-                {"from": 3, "to": 2, "fromPort": "R", "toPort": "R", "visible": true, "text": "否"},
                 {"from": 1, "to": 2, "fromPort": "B", "toPort": "T"},
-                {"from": 3, "to": 4, "fromPort": "B", "toPort": "T", "visible": true},
-                {"from": 4, "to": 5, "fromPort": "B", "toPort": "T"},
-                {"from": 5, "to": 6, "fromPort": "B", "toPort": "T"}
+                {"from": 2, "to": 4, "fromPort": "B", "toPort": "T"},
+                {"from": 4, "to": 6, "fromPort": "B", "toPort": "T"}
             ]
         }
     );

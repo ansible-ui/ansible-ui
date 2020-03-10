@@ -93,9 +93,11 @@
         enableLiveAutocompletion: true
     });
 
-    editor.on("paste", function(e) {
+    editor.on("paste", function (e) {
 
-        setTimeout(function(){ beautify.beautify(editor.session); }, 500);
+        setTimeout(function () {
+            beautify.beautify(editor.session);
+        }, 500);
 
     });
 
@@ -121,7 +123,26 @@
                 drag: true,//拖拽
                 elem: '#test9'
                 , data: data
-                , edit: ['add', 'update', 'del'] //操作节点的图标
+                , edit: ['run'] //操作节点的图标
+                , operate: function (obj) {
+                    var type = obj.type; //得到操作类型：add、edit、del
+                    var data = obj.data; //得到当前节点的数据
+                    var elem = obj.elem; //得到当前节点元素
+
+
+                    if (type === 'run') { //增加节点
+
+                        if (data.parent_id != 0) {
+
+                            alert("只有第一层级可执行");
+
+                            return false;
+                        }
+                        console.warn(data);
+
+                    }
+                }
+
                 , click: function (obj) {
 
 
@@ -209,7 +230,7 @@
         // $("#servermsg").append("<br>>> Data sent: " + $("#path").val() + "<br>");
 
 
-        window.location ="/soft/workflow";
+        window.location = "/soft/workflow";
     });
 
 </script>
