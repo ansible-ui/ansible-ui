@@ -32,8 +32,14 @@ async def handler_soft_workflow(request):
     return {'name': 'Andrew', 'age': 'Svetlov'}
 
 
+async def handler_soft_workflow_roles(request):
+    post = await request.post()
+    print(post)
+    return {'name': 'Andrew', 'age': 'Svetlov'}
 
-def handler_ansible_list(request):
+
+
+async def handler_ansible_list(request):
 
     dir_path =  request.app['settings'].ansible_workspace
 

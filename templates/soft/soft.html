@@ -117,28 +117,38 @@
 
             //开启节点操作图标
             tree.render({
-                //showCheckbox: true,//显示多选框
+                showCheckbox: true,//显示多选框
                 showSearch: true,//显示搜索框
                 accordion: true,//手风琴模式
                 drag: true,//拖拽
                 elem: '#test9'
                 , data: data
-                , edit: ['run'] //操作节点的图标
+                , edit: ['ansible'] //操作节点的图标
                 , operate: function (obj) {
                     var type = obj.type; //得到操作类型：add、edit、del
                     var data = obj.data; //得到当前节点的数据
                     var elem = obj.elem; //得到当前节点元素
 
 
+                     if (data.parent_id != 0) {
+
+                         $("#exec").addClass("layui-btn-disabled");
+                    }else{
+                          $("#exec").removeClass("layui-btn-disabled");
+                     }
+
                     if (type === 'run') { //增加节点
 
-                        if (data.parent_id != 0) {
-
-                            alert("只有第一层级可执行");
-
-                            return false;
+                        /*缓存*/
+                        if (window.localStorage) {
+                            var wLocal = window.localStorage;
+                            wLocal.workflowFile = data.path + "/main.yaml";
+                        } else {
+                            console.log('请使用高版本浏览器');
                         }
-                        console.warn(data);
+
+                        window.location = "/soft/workflow";
+
 
                     }
                 }
@@ -146,11 +156,18 @@
                 , click: function (obj) {
 
 
+
+                     if (obj.data.parent_id != 0) {
+
+                         $("#exec").addClass("layui-btn-disabled");
+                    }else{
+                          $("#exec").removeClass("layui-btn-disabled");
+                     }
+
                     if (obj.data.type == "file") {
 
                         // 可用
                         $("#save").removeClass("layui-btn-disabled");
-                        $("#exec").removeClass("layui-btn-disabled");
 
                         // 设置隐藏域的值
                         $("#path").val(obj.data.path);
@@ -161,9 +178,6 @@
 
                             let text = ""
                             $.each(data.data, function (k, v) {
-                                //
-                                // console.log(k);
-                                //  console.log(v);
 
                                 text = text + v;
                             })
@@ -174,9 +188,10 @@
 
                         });
 
+                    }else{
+                         $("#save").addClass("layui-btn-disabled");
                     }
                     //console.log(obj.data);
-
 
                     //layer.msg(JSON.stringify(obj.data));
 
@@ -229,6 +244,14 @@
         //
         // $("#servermsg").append("<br>>> Data sent: " + $("#path").val() + "<br>");
 
+
+        /*缓存*/
+        if (window.localStorage) {
+            var wLocal = window.localStorage;
+            wLocal.workflowFile = $("#path").val() ;
+        } else {
+            console.log('请使用高版本浏览器');
+        }
 
         window.location = "/soft/workflow";
     });

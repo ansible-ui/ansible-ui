@@ -1,8 +1,8 @@
 window.onload = function () {
-    var $ = go.GraphObject.make;    // 创建画布
+    var go_object = go.GraphObject.make;    // 创建画布
 
     var myDiagram =
-        $(go.Diagram, "myDiagramDiv",   // 必须与Div元素的id属性一致
+        go_object(go.Diagram, "myDiagramDiv",   // 必须与Div元素的id属性一致
             {
                 initialContentAlignment: go.Spot.Center, // 居中显示内容
                 "undoManager.isEnabled": true, // 启用Ctrl-Z和Ctrl-Y撤销重做功能
@@ -81,7 +81,7 @@ window.onload = function () {
         // 如果是上、下边界，则是水平"port"
         var horizontal = align.equals(go.Spot.Top) || align.equals(go.Spot.Bottom);
 
-        return $(go.Shape,
+        return go_object(go.Shape,
             {
                 fill: "transparent",            // 默认透明不现实
                 strokeWidth: 0,                 // 无边框
@@ -123,13 +123,13 @@ window.onload = function () {
 
     // 定义步骤（默认类型）节点的模板
     myDiagram.nodeTemplateMap.add("",  // 默认类型
-        $(go.Node, "Table", nodeStyle(),
+        go_object(go.Node, "Table", nodeStyle(),
             // 步骤节点是一个包含可编辑文字块的长方形图块
-            $(go.Panel, "Auto",
-                $(go.Shape, "Rectangle",
+            go_object(go.Panel, "Auto",
+                go_object(go.Shape, "Rectangle",
                     {fill: "#00A9C9", strokeWidth: 0},
                     new go.Binding("figure", "figure")),
-                $(go.TextBlock, textStyle(),
+                go_object(go.TextBlock, textStyle(),
                     {
                         margin: 8,
                         maxSize: new go.Size(160, NaN),
@@ -137,7 +137,7 @@ window.onload = function () {
                         editable: true  // 文字可编辑
                     },
                     new go.Binding("text").makeTwoWay()),  // 双向绑定模型中"text"属性
-                $(go.TextBlock, textStyle(),
+                go_object(go.TextBlock, textStyle(),
                     {
                         margin: 8,
                         maxSize: new go.Size(160, NaN),
@@ -158,13 +158,13 @@ window.onload = function () {
 
     // 定义条件节点的模板
     myDiagram.nodeTemplateMap.add("Conditional",
-        $(go.Node, "Table", nodeStyle(),
+        go_object(go.Node, "Table", nodeStyle(),
             // 条件节点是一个包含可编辑文字块的菱形图块
-            $(go.Panel, "Auto",
-                $(go.Shape, "Diamond",
+            go_object(go.Panel, "Auto",
+                go_object(go.Shape, "Diamond",
                     {fill: "#00A9C9", strokeWidth: 0},
                     new go.Binding("figure", "figure")),
-                $(go.TextBlock, textStyle(),
+                go_object(go.TextBlock, textStyle(),
                     {
                         margin: 8,
                         maxSize: new go.Size(160, NaN),
@@ -184,12 +184,12 @@ window.onload = function () {
 
     // 定义开始节点的模板
     myDiagram.nodeTemplateMap.add("Start",
-        $(go.Node, "Table", nodeStyle(),
+        go_object(go.Node, "Table", nodeStyle(),
             // 开始节点是一个圆形图块，文字不可编辑
-            $(go.Panel, "Auto",
-                $(go.Shape, "Circle",
+            go_object(go.Panel, "Auto",
+                go_object(go.Shape, "Circle",
                     {minSize: new go.Size(40, 40), fill: "#79C900", strokeWidth: 0}),
-                $(go.TextBlock, "Start", textStyle(),
+                go_object(go.TextBlock, "Start", textStyle(),
                     new go.Binding("text"))
             ),
 
@@ -202,12 +202,12 @@ window.onload = function () {
 
     // 定义结束节点的模板
     myDiagram.nodeTemplateMap.add("End",
-        $(go.Node, "Table", nodeStyle(),
+        go_object(go.Node, "Table", nodeStyle(),
             // 结束节点是一个圆形图块，文字不可编辑
-            $(go.Panel, "Auto",
-                $(go.Shape, "Circle",
+            go_object(go.Panel, "Auto",
+                go_object(go.Shape, "Circle",
                     {minSize: new go.Size(40, 40), fill: "#DC3C00", strokeWidth: 0}),
-                $(go.TextBlock, "End", textStyle(),
+                go_object(go.TextBlock, "End", textStyle(),
                     new go.Binding("text"))
             ),
 
@@ -220,11 +220,11 @@ window.onload = function () {
 
     // 定义注释节点的模板
     myDiagram.nodeTemplateMap.add("Comment",
-        $(go.Node, "Auto", nodeStyle(),
+        go_object(go.Node, "Auto", nodeStyle(),
             // 注释节点是一个包含可编辑文字块的文件图块
-            $(go.Shape, "Rectangle",
+            go_object(go.Shape, "Rectangle",
                 {fill: "#EFFAB4", strokeWidth: 0}),
-            $(go.TextBlock, textStyle(),
+            go_object(go.TextBlock, textStyle(),
                 {
                     margin: 5,
                     maxSize: new go.Size(200, NaN),
@@ -241,12 +241,12 @@ window.onload = function () {
 
     myDiagram.groupTemplateMap.add(
         'OfGroups',   // 注册组名
-        $(go.Group, 'Auto',  // 设置组属性和排版
+        go_object(go.Group, 'Auto',  // 设置组属性和排版
             {
                 background: 'transparent',
                 handlesDragDropForMembers: true,
                 // 使用网格布局
-                layout: $(go.GridLayout, {
+                layout: go_object(go.GridLayout, {
                     wrappingWidth: Infinity,
                     alignment: go.GridLayout.Position,
                     cellSize: new go.Size(10, 10), // 每个part的最小尺寸
@@ -255,17 +255,17 @@ window.onload = function () {
                 mouseDrop: finishDrop,
             },
             // 整个黄色的矩形大框框
-            $(go.Shape, 'Rectangle', {fill: null, stroke: '#FFDD33', strokeWidth: 2}),
+            go_object(go.Shape, 'Rectangle', {fill: null, stroke: '#FFDD33', strokeWidth: 2}),
             // 填充在矩形框里的标题部分，这里引入了go.Placeholder 对象，这个对象用于存放成员，并做一些填充
             // 标题和成员，我们竖向排版
-            $(go.Panel, 'Vertical',
+            go_object(go.Panel, 'Vertical',
                 // 标题模块，我们添加了一个展开收起的按钮，和标题文字是横向排布的
-                $(go.Panel, 'Horizontal',
+                go_object(go.Panel, 'Horizontal',
                     {stretch: go.GraphObject.Horizontal, background: '#FFDD33'},
                     // 展开收起按钮
-                    $('SubGraphExpanderButton', {alignment: go.Spot.Right, margin: 5}),
+                    go_object('SubGraphExpanderButton', {alignment: go.Spot.Right, margin: 5}),
                     // 标题文字和一些设置
-                    $(go.TextBlock,
+                    go_object(go.TextBlock,
                         {
 
                             maxSize: new go.Size(200, NaN),
@@ -280,20 +280,20 @@ window.onload = function () {
                         new go.Binding('text', 'text')
                     )
                 ),
-                $(go.Placeholder, {padding: 5, alignment: go.Spot.TopLeft})
+                go_object(go.Placeholder, {padding: 5, alignment: go.Spot.TopLeft})
             )
         )
     );
     myDiagram.groupTemplateMap.add(
         'OfNodes',   // 注册组名
         // 分析同上
-        $(go.Group, 'Auto',
+        go_object(go.Group, 'Auto',
             {
                 background: 'transparent',
                 ungroupable: true,
                 computesBoundsAfterDrag: true,
                 handlesDragDropForMembers: true,
-                layout: $(go.GridLayout, {
+                layout: go_object(go.GridLayout, {
                     wrappingColumn: 1,
                     alignment: go.GridLayout.Position,
                     cellSize: new go.Size(1, 1),
@@ -301,12 +301,12 @@ window.onload = function () {
                 }),
                 mouseDrop: finishDrop,
             },
-            $(go.Shape, 'Rectangle', {fill: null, stroke: '#33D3E5', strokeWidth: 2}),
-            $(go.Panel, 'Vertical',
-                $(go.Panel, 'Horizontal',
+            go_object(go.Shape, 'Rectangle', {fill: null, stroke: '#33D3E5', strokeWidth: 2}),
+            go_object(go.Panel, 'Vertical',
+                go_object(go.Panel, 'Horizontal',
                     {stretch: go.GraphObject.Horizontal, background: '#33D3E5'},
-                    $('SubGraphExpanderButton', {alignment: go.Spot.Right, margin: 5}),
-                    $(go.TextBlock,
+                    go_object('SubGraphExpanderButton', {alignment: go.Spot.Right, margin: 5}),
+                    go_object(go.TextBlock,
                         {
                             alignment: go.Spot.Left,
                             editable: true,
@@ -318,7 +318,7 @@ window.onload = function () {
                         new go.Binding('text', 'text')
                     )
                 ),
-                $(go.Placeholder, {padding: 5, alignment: go.Spot.TopLeft})
+                go_object(go.Placeholder, {padding: 5, alignment: go.Spot.TopLeft})
             )
         )
     );
@@ -326,7 +326,7 @@ window.onload = function () {
 
     // 初始化连接线的模板
     myDiagram.linkTemplate =
-        $(go.Link,  // 所有连接线
+        go_object(go.Link,  // 所有连接线
             {
                 routing: go.Link.AvoidsNodes,   // 连接线避开节点
                 curve: go.Link.JumpOver,
@@ -345,24 +345,24 @@ window.onload = function () {
                 selectionAdorned: false
             },
             new go.Binding("points").makeTwoWay(),  // 双向绑定模型中"points"数组属性
-            $(go.Shape,  // 隐藏的连线形状，8个像素粗细，当鼠标移上后显示
+            go_object(go.Shape,  // 隐藏的连线形状，8个像素粗细，当鼠标移上后显示
                 {isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT"}
             ),
-            $(go.Shape,  // 连线规格（颜色，选中/非选中，粗细）
+            go_object(go.Shape,  // 连线规格（颜色，选中/非选中，粗细）
                 {isPanelMain: true, stroke: "gray", strokeWidth: 2},
                 new go.Binding("stroke", "isSelected", function (sel) {
                     return sel ? "dodgerblue" : "gray";
                 }).ofObject()
             ),
-            $(go.Shape,  // 箭头规格
+            go_object(go.Shape,  // 箭头规格
                 {toArrow: "standard", strokeWidth: 0, fill: "gray"}
             ),
-            $(go.Panel, "Auto",  // 连线标签，默认不显示
+            go_object(go.Panel, "Auto",  // 连线标签，默认不显示
                 {visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5},
                 new go.Binding("visible", "visible").makeTwoWay(),  // 双向绑定模型中"visible"属性
-                $(go.Shape, "RoundedRectangle",  // 连线中显示的标签形状
+                go_object(go.Shape, "RoundedRectangle",  // 连线中显示的标签形状
                     {fill: "#F8F8F8", strokeWidth: 0}),
-                $(go.TextBlock, "是",  // 连线中显示的默认标签文字
+                go_object(go.TextBlock, "是",  // 连线中显示的默认标签文字
                     {
                         textAlign: "center",
                         font: "10pt helvetica, arial, sans-serif",
@@ -388,14 +388,14 @@ window.onload = function () {
 
     // 在图形页面的左边初始化图例Palette面板
     myPalette =
-        $(go.Palette, "myPaletteDiv",  // 必须同HTML中Div元素id一致
+        go_object(go.Palette, "myPaletteDiv",  // 必须同HTML中Div元素id一致
             {
                 scrollsPageOnFocus: false,  // 图选中时页面不会滚动
                 nodeTemplateMap: myDiagram.nodeTemplateMap,     // 同myDiagram公用一种node节点模板
                 groupTemplateMap: myDiagram.groupTemplateMap,    // 同myDiagram公用一种node节点模板
                 model: new go.GraphLinksModel([  // 初始化Palette面板里的内容
                     {category: "Start", text: "开始"},
-                    {text: "步骤1", data: '{"likes": {$gt:50}, $or: [{"user": "usr001"},{"title": "title01"}]}'},
+                    {text: "步骤1", data: '{"likes": {go_objectgt:50}, go_objector: [{"user": "usr001"},{"title": "title01"}]}'},
                     {category: "Conditional", text: "条件1"},
                     {category: "End", text: "结束"},
                     {category: "Comment", text: "注释"},
@@ -466,6 +466,11 @@ window.onload = function () {
         });
 
 
+    $.post("/soft/workflow/roles",{'path':window.localStorage.workflowFile},function (data,status) {
+
+        console.warn(data);
+
+    });
     // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
 
     // 将go模型以JSon格式保存在文本框内

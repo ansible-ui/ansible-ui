@@ -31,6 +31,7 @@ def setup_routes(app):
     app.router.add_post('/soft/ansible_read', handler_ansible_read),
     app.router.add_post('/soft/ansible_write', handler_ansible_write),
     app.router.add_get('/soft/workflow', handler_soft_workflow)
+    app.router.add_post('/soft/workflow/roles', handler_soft_workflow_roles)
     app.router.add_get('/soft/ws', ws_ansible_run)
 
 
