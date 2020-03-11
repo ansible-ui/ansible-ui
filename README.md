@@ -5,20 +5,19 @@
 ### 软件环境
 
     golang (terraform)
-    python3 (ansible)
-    mongodb
+    python>=3.6 (ansible)
+    mongodb>=4.0
 
-### 环境准备
-
-    pip3 install -r requirements.txt
-    
-  
 ###  clone 仓库
 
     git clone  git@github.com:multi-cloud-devops/terraform_workspace.git /data
     git clone  git@github.com:multi-cloud-devops/ansible_workspace.git /data
     git clone  git@github.com:multi-cloud-devops/macross.git /data
     
+### 环境准备
+
+    pip3 install -r /data/macross/requirements.txt
+
 ### web运行
    
     cd /data/macross && python3 main.py
