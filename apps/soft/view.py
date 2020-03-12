@@ -34,8 +34,10 @@ async def handler_soft_workflow(request):
 
 async def handler_soft_workflow_roles(request):
     post = await request.post()
-    print(post)
-    return {'name': 'Andrew', 'age': 'Svetlov'}
+    result = read_yaml_file(post['path'])
+
+    roles = result[0]['roles']
+    return web.json_response(roles)
 
 
 

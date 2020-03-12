@@ -14,7 +14,7 @@
 
 import os
 import os.path
-import json
+import yaml
 
 
 def get_files_data(dirpath, jsonlist):
@@ -94,3 +94,10 @@ def read_t_file(filename):
 def write_t_file(filename, data):
     with open(filename, 'w') as file_obj:
         file_obj.write(data)
+
+
+def read_yaml_file(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        return yaml.load(f)
+
+

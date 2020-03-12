@@ -405,27 +405,27 @@ window.onload = function () {
             });
 
 
-    // 初始化模型范例
-    myDiagram.model = go.Model.fromJson(
-        {
-            "class": "go.GraphLinksModel",
-            "linkFromPortIdProperty": "fromPort",
-            "linkToPortIdProperty": "toPort",
-            "modelData": {"test": true, "hello": "world", "version": 42},
-            "nodeDataArray": [
-                {"category": "Start", "text": "开始", "key": 1, "loc": "88 37"},
-                {"text": "php", "key": 2, "loc": "88 114", "data": "aaa"},
-                {"text": "nginx", "key": 4, "loc": "88 307", "data": "bbb"},
-                {"category": "End", "text": "结束", "key": 6, "loc": "88 445"}
-            ],
-            "linkDataArray": [
-                {"from": 2, "to": 3, "fromPort": "B", "toPort": "T"},
-                {"from": 1, "to": 2, "fromPort": "B", "toPort": "T"},
-                {"from": 2, "to": 4, "fromPort": "B", "toPort": "T"},
-                {"from": 4, "to": 6, "fromPort": "B", "toPort": "T"}
-            ]
-        }
-    );
+    // // 初始化模型范例
+    // myDiagram.model = go.Model.fromJson(
+    //     {
+    //         "class": "go.GraphLinksModel",
+    //         "linkFromPortIdProperty": "fromPort",
+    //         "linkToPortIdProperty": "toPort",
+    //         "modelData": {"test": true, "hello": "world", "version": 42},
+    //         "nodeDataArray": [
+    //             {"category": "Start", "text": "开始", "key": 1, "loc": "88 37"},
+    //             {"text": "php", "key": 2, "loc": "88 114", "data": "aaa"},
+    //             {"text": "nginx", "key": 4, "loc": "88 307", "data": "bbb"},
+    //             {"category": "End", "text": "结束", "key": 6, "loc": "88 445"}
+    //         ],
+    //         "linkDataArray": [
+    //             {"from": 2, "to": 3, "fromPort": "B", "toPort": "T"},
+    //             {"from": 1, "to": 2, "fromPort": "B", "toPort": "T"},
+    //             {"from": 2, "to": 4, "fromPort": "B", "toPort": "T"},
+    //             {"from": 4, "to": 6, "fromPort": "B", "toPort": "T"}
+    //         ]
+    //     }
+    // );
 
 
     // 属于表格
@@ -468,7 +468,31 @@ window.onload = function () {
 
     $.post("/soft/workflow/roles",{'path':window.localStorage.workflowFile},function (data,status) {
 
+        
         console.warn(data);
+
+            // 初始化模型范例
+        myDiagram.model = go.Model.fromJson(
+            {
+                "class": "go.GraphLinksModel",
+                "linkFromPortIdProperty": "fromPort",
+                "linkToPortIdProperty": "toPort",
+                "modelData": {"test": true, "hello": "world", "version": 42},
+                "nodeDataArray": [
+                    {"category": "Start", "text": "开始", "key": 1, "loc": "88 37"},
+                    {"text": "php", "key": 2, "loc": "88 114", "data": "aaa"},
+                    {"text": "nginx", "key": 4, "loc": "88 307", "data": "bbb"},
+                    {"category": "End", "text": "结束", "key": 6, "loc": "88 445"}
+                ],
+                "linkDataArray": [
+                    {"from": 2, "to": 3, "fromPort": "B", "toPort": "T"},
+                    {"from": 1, "to": 2, "fromPort": "B", "toPort": "T"},
+                    {"from": 2, "to": 4, "fromPort": "B", "toPort": "T"},
+                    {"from": 4, "to": 6, "fromPort": "B", "toPort": "T"}
+                ]
+            }
+        );
+
 
     });
     // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
