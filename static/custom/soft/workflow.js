@@ -27,8 +27,8 @@ window.onload = function () {
 
         const part = e.subject.part;
 
-          var key = part.data.key;
-            var text = part.part.data.text;
+        var key = part.data.key;
+        var text = part.part.data.text;
 
         console.warn(key);
         console.warn(text);
@@ -395,7 +395,10 @@ window.onload = function () {
                 groupTemplateMap: myDiagram.groupTemplateMap,    // 同myDiagram公用一种node节点模板
                 model: new go.GraphLinksModel([  // 初始化Palette面板里的内容
                     {category: "Start", text: "开始"},
-                    {text: "步骤1", data: '{"likes": {go_objectgt:50}, go_objector: [{"user": "usr001"},{"title": "title01"}]}'},
+                    {
+                        text: "步骤1",
+                        data: '{"likes": {go_objectgt:50}, go_objector: [{"user": "usr001"},{"title": "title01"}]}'
+                    },
                     {category: "Conditional", text: "条件1"},
                     {category: "End", text: "结束"},
                     {category: "Comment", text: "注释"},
@@ -466,30 +469,91 @@ window.onload = function () {
         });
 
 
-    $.post("/soft/workflow/roles",{'path':window.localStorage.workflowFile},function (data,status) {
+    String.prototype.signMix = function () {
+        if (arguments.length === 0) return this;
+        var param = arguments[0], str = this;
+        if (typeof (param) === 'object') {
+            for (var key in param)
+                str = str.replace(new RegExp("\\{" + key + "\\}", "g"), param[key]);
+            return str;
+        } else {
+            for (var i = 0; i < arguments.length; i++)
+                str = str.replace(new RegExp("\\{" + i + "\\}", "g"), arguments[i]);
+            return str;
+        }
+    }
 
-        
-        console.warn(data);
+    $.post("/soft/workflow/roles", {'path': window.localStorage.workflowFile}, function (data, status) {
 
-            // 初始化模型范例
+
+        var nodeDataArray = new Array();
+        var linkDataArray = new Array();
+
+
+        for (let index in data) {
+
+            console.warn(index);
+            console.warn(data.length);
+
+
+            if (index == 0) {
+                nodeDataArray.push({
+                    "category": "Start",
+                    "text": "Start",
+                    "key": "Start",
+                    "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100)
+                });
+
+                nodeDataArray.push({
+                    "role": data[index],
+                    "text": data[index],
+                    "key": data[index],
+                     "data": '{"likes": {$gt:50}, $or: [{"user": "usr001"},{"title": "title01"}]}',
+                    "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 100)
+                });
+                linkDataArray.push({"from": "Start", "to": data[index], "fromPort": "B", "toPort": "T"},);
+            } else if ((parseInt(index) + 1) == data.length) {
+
+                nodeDataArray.push({
+                    "role": data[index],
+                    "text": data[index],
+                    "key": data[index],
+                    "data": '{"likes": {$gt:50}, $or: [{"user": "usr001"},{"title": "title01"}]}',
+                    "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 100)
+                });
+                nodeDataArray.push({
+                    "category": "End",
+                    "text": "End",
+                    "key": "End",
+                    "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 200)
+                });
+                linkDataArray.push({"from": data[index - 1], "to": data[index], "fromPort": "B", "toPort": "T"},);
+                linkDataArray.push({"from": data[index], "to": "End", "fromPort": "B", "toPort": "T"},);
+            } else {
+
+                nodeDataArray.push({
+                    "role": data[index],
+                    "text": data[index],
+                    "key": data[index],
+                     "data": '{"likes": {$gt:50}, $or: [{"user": "usr001"},{"title": "title01"}]}',
+                    "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 100)
+                });
+
+                linkDataArray.push({"from": data[index - 1], "to": data[index], "fromPort": "B", "toPort": "T"},);
+            }
+        }
+        ;
+
+
+        // 初始化模型范例
         myDiagram.model = go.Model.fromJson(
             {
                 "class": "go.GraphLinksModel",
                 "linkFromPortIdProperty": "fromPort",
                 "linkToPortIdProperty": "toPort",
                 "modelData": {"test": true, "hello": "world", "version": 42},
-                "nodeDataArray": [
-                    {"category": "Start", "text": "开始", "key": 1, "loc": "88 37"},
-                    {"text": "php", "key": 2, "loc": "88 114", "data": "aaa"},
-                    {"text": "nginx", "key": 4, "loc": "88 307", "data": "bbb"},
-                    {"category": "End", "text": "结束", "key": 6, "loc": "88 445"}
-                ],
-                "linkDataArray": [
-                    {"from": 2, "to": 3, "fromPort": "B", "toPort": "T"},
-                    {"from": 1, "to": 2, "fromPort": "B", "toPort": "T"},
-                    {"from": 2, "to": 4, "fromPort": "B", "toPort": "T"},
-                    {"from": 4, "to": 6, "fromPort": "B", "toPort": "T"}
-                ]
+                "nodeDataArray": nodeDataArray,
+                "linkDataArray": linkDataArray
             }
         );
 
