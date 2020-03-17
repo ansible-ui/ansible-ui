@@ -58,7 +58,7 @@ def main(argv):
 
     parser = argparse.ArgumentParser(description="aiohttp server start")
     parser.add_argument('--host', type=str, default='127.0.0.1', help='this is a host')
-    parser.add_argument('--port', type=str, default='8080', help='this is a port')
+    parser.add_argument('--port', type=str, default='9000', help='this is a port')
     args = parser.parse_args()
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
     loop = asyncio.get_event_loop()
