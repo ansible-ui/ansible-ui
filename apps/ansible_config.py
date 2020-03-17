@@ -11,16 +11,19 @@
 """
 
 import tempfile
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def get_ansible_hosts_data(result):
 
 
-async def get_ansible_hosts_data(request):
-
-    cmdb = request.app['cmdb']
-    result = cmdb.assets.find({"root": "database"})
 
     """
     构造ansible hosts内容结构
     """
+
+    logger.info(result)
 
     hosts_list = []
 
@@ -31,31 +34,31 @@ async def get_ansible_hosts_data(request):
         ],
         'ip_list': []}
 
-    for host in await result.to_list(length=1000):
+    for host in result:
         hosts_info['ip_list'].append({
             'public_ip': host['public_ip'],
             'inner_ip': host['inner_ip']
         })
     hosts_list.append(hosts_info)
 
-    print(hosts_list)
+    logger.info(hosts_list)
     hosts_file = tempfile.mktemp()
-    print(hosts_file)
+    logger.info(hosts_file)
 
-    hosts_file = "/data/2.txt"
+    hosts_file = "/tmp/2.txt"
 
     with open(hosts_file, 'w+', encoding='utf-8') as file:
         hosts = []
 
         for host in hosts_list:
-            hosts.append('[{game}_{cluster}_{module}]'.format(**host))
+            hosts.append('[{role}]'.format(**host))
 
             for h in host['ip_list']:
                 hosts.append(h['public_ip'])
 
-            # hosts.append('[{game}_{cluster}_{module}:vars]'.format(**host))
-            # for vars in host['vars_list']:
-            #     hosts.append("{key}={value}".format(**vars))
+            hosts.append('[{role}:vars]'.format(**host))
+            for vars in host['vars_list']:
+                hosts.append("{key}={value}".format(**vars))
 
         file.write('\n'.join(hosts))
     return hosts_file

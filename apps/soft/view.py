@@ -81,7 +81,15 @@ async def ws_ansible_run(request):
 
                 from apps.ansible_config import get_ansible_hosts_data
 
-                get_ansible_hosts_data(request)
+                cmdb = request.app['cmdb']
+                result = cmdb.assets.find({"root": "database"})
+
+                hosts = []
+                for host in await result.to_list(length=1000):
+                    hosts.append(host)
+
+
+                get_ansible_hosts_data(hosts)
 
 
 
