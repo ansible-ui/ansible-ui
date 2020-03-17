@@ -20,6 +20,7 @@ from aiohttp import web
 
 import aiohttp_jinja2
 import jinja2
+import  json
 from apps.config import  *
 
 @aiohttp_jinja2.template('soft/soft.html')
@@ -77,10 +78,19 @@ async def ws_ansible_run(request):
             else:
 
 
+
+                from apps.ansible_config import get_ansible_hosts_data
+
+                get_ansible_hosts_data(request)
+
+
+
+
                 import subprocess
                 import subprocess, shlex
 
                 data2 = json.loads(msg.data)
+
                 work_path = os.path.dirname(os.path.abspath(data2['path']))
 
                 command = "ansible -i hosts all -m ping"
@@ -93,10 +103,11 @@ async def ws_ansible_run(request):
                     err = p.stderr
 
                     if err:
-                        print("sub process err: ", err)
+                        # print("sub process err: ", err)
+                        await ws.send_str(err.decode(encoding='utf-8', errors='strict'))
 
                     if out:
-                        print("sub process output: ", out)
+                        # print("sub process output: ", out)
                         await ws.send_str(out.decode(encoding='utf-8', errors='strict'))
 
                 # 子进程返回值

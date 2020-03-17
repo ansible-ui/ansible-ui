@@ -10,22 +10,18 @@
 # @DATA    : 2020-02-03
 """
 
-
-
 import os
 import os.path
 import yaml
 
 
 def get_files_data(dirpath, jsonlist):
-
-
     index = 0
     for root, dirs, files in os.walk(dirpath):
 
         files = [f for f in files if not f[0] == '.']
         dirs[:] = [d for d in dirs if not d[0] == '.']
-        
+
         for d in dirs:
 
             if d[0] == ".": continue
@@ -55,11 +51,9 @@ def get_files_data(dirpath, jsonlist):
         index = index + 1
 
 
-
 def get_tree(dir_path):
     jsonlist = list()
     get_files_data(dir_path, jsonlist)
-
 
     new_data = []  # 定义一个与 data 一模一样的新列表
     d_data = []  # 定义一个最终需要的列表
@@ -82,7 +76,6 @@ def get_tree(dir_path):
     return d_data
 
 
-
 def read_t_file(filename):
     # 读取文件按行读取到列表中
     with open(filename) as f:
@@ -98,6 +91,4 @@ def write_t_file(filename, data):
 
 def read_yaml_file(filename):
     with open(filename, 'r', encoding='utf-8') as f:
-        return yaml.load(f)
-
-
+        return yaml.load(f, Loader=yaml.FullLoader)

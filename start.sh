@@ -1,0 +1,1 @@
+adev runserver -v main.py --app-factory init -p 9000 --debug-toolbar --host localhost

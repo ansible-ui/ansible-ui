@@ -1,5 +1,9 @@
 # macross
 
+[![Python](https://img.shields.io/badge/python-v3.5%2B-blue.svg)](https://www.python.org/)
+[![aiohttp](https://img.shields.io/badge/aiohttp-v3.6.2-brightgreen.svg)](https://aiohttp.readthedocs.io/en/stable/)
+[![aiohttp](https://img.shields.io/badge/mongodb-v4.0%2B-blue.svg)](https://aiohttp.readthedocs.io/en/stable/)
+
 
 
 ### 软件环境
@@ -19,8 +23,8 @@
     pip3 install -r /data/macross/requirements.txt
 
 ### web运行
-   
-    cd /data/macross && python3 main.py
+    cd /data/macross && python3 main.py 【发生变生需重启】
+    cd /data/macross && ./start.sh
    
     
 ### 预览

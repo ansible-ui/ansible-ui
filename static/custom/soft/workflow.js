@@ -26,12 +26,9 @@ window.onload = function () {
     myDiagram.addDiagramListener("ObjectSingleClicked", function (e) {
 
         const part = e.subject.part;
-
-        var key = part.data.key;
-        var text = part.part.data.text;
-
-        console.warn(key);
-        console.warn(text);
+        //
+        // var key = part.data.key;
+        // var text = part.part.data.text;
 
         if (part instanceof go.Node) { // 点击的是节点
             document.getElementById("myInspectorDiv").style.visibility = "visible";
@@ -492,9 +489,6 @@ window.onload = function () {
 
         for (let index in data) {
 
-            console.warn(index);
-            console.warn(data.length);
-
 
             if (index == 0) {
                 nodeDataArray.push({
@@ -561,76 +555,55 @@ window.onload = function () {
     });
     // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
 
-    // 将go模型以JSon格式保存在文本框内
-    document.getElementById("saveButton").addEventListener("click", function () {
+    // // 将go模型以JSon格式保存在文本框内
+    // document.getElementById("saveButton").addEventListener("click", function () {
+    //
+    //
+    //     initCode = null;
+    //     var key_one = false, key_two = false;
+    //     for (arr in myDiagram.model.nodeDataArray) {
+    //
+    //         if (myDiagram.model.nodeDataArray[arr].text === 'Start') {
+    //             key_one = true;
+    //         }
+    //         if (myDiagram.model.nodeDataArray[arr].text === 'End') {
+    //             key_two = true;
+    //         }
+    //     }
+    //     if (key_one && key_two) {
+    //         initCode = myDiagram.model.toJson();
+    //         /*缓存*/
+    //         if (window.localStorage) {
+    //             var wLocal = window.localStorage;
+    //             wLocal.saveModel = myDiagram.model.toJson();
+    //         } else {
+    //             console.log('请使用高版本浏览器');
+    //         }
+    //         myDiagram.isModified = false;
+    //     } else {
+    //         alert('保存失败!开始按钮和结束按钮必须存在');
+    //     }
+    //
+    //     // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+    //     // myDiagram.isModified = false;
+    // });
+    //
+    // // 读取文本框内JSon格式的内容，并转化为gojs模型
+    // document.getElementById("loadButton").addEventListener("click", function () {
+    //     //myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+    //
+    //     /*缓存*/
+    //     if (window.localStorage) {
+    //         if (window.localStorage.saveModel) {
+    //             initCode = window.localStorage.saveModel;
+    //         }
+    //     } else {
+    //         console.log('请使用高版本浏览器');
+    //     }
+    //     myDiagram.model = go.Model.fromJson(initCode);
+    //
+    // });
 
-
-        initCode = null;
-        var key_one = false, key_two = false;
-        for (arr in myDiagram.model.nodeDataArray) {
-
-            if (myDiagram.model.nodeDataArray[arr].text === '开始') {
-                key_one = true;
-            }
-            if (myDiagram.model.nodeDataArray[arr].text === '结束') {
-                key_two = true;
-            }
-        }
-        if (key_one && key_two) {
-            initCode = myDiagram.model.toJson();
-            /*缓存*/
-            if (window.localStorage) {
-                var wLocal = window.localStorage;
-                wLocal.saveModel = myDiagram.model.toJson();
-            } else {
-                console.log('请使用高版本浏览器');
-            }
-            myDiagram.isModified = false;
-        } else {
-            alert('保存失败!开始按钮和结束按钮必须存在');
-        }
-
-        // document.getElementById("mySavedModel").value = myDiagram.model.toJson();
-        // myDiagram.isModified = false;
-    });
-
-    // 读取文本框内JSon格式的内容，并转化为gojs模型
-    document.getElementById("loadButton").addEventListener("click", function () {
-        //myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
-
-        /*缓存*/
-        if (window.localStorage) {
-            if (window.localStorage.saveModel) {
-                initCode = window.localStorage.saveModel;
-            }
-        } else {
-            console.log('请使用高版本浏览器');
-        }
-        myDiagram.model = go.Model.fromJson(initCode);
-
-    });
-
-    // 在新窗口中将图形转化为SVG，并分页打印
-    document.getElementById("printButton").addEventListener("click", function () {
-        var svgWindow = window.open();
-        if (!svgWindow) return;  // 创建新窗口失败
-        var printSize = new go.Size(700, 960);
-        var bnds = myDiagram.documentBounds;
-        var x = bnds.x;
-        var y = bnds.y;
-        while (y < bnds.bottom) {
-            while (x < bnds.right) {
-                var svg = myDiagram.makeSVG({scale: 1.0, position: new go.Point(x, y), size: printSize});
-                svgWindow.document.body.appendChild(svg);
-                x += printSize.width;
-            }
-            x = bnds.x;
-            y += printSize.height;
-        }
-        setTimeout(function () {
-            svgWindow.print();
-        }, 1);
-    });
 
 
 } // windows.onload

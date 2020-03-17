@@ -21,18 +21,18 @@
 
         <header class="layui-card-header pitaya-layui-card-header">
 
-            <button class="layui-btn layui-btn-sm pitaya-btn layui-btn-normal" id="saveButton">保存画布</button>
-            <button class="layui-btn layui-btn-sm pitaya-btn layui-btn-normal" id="loadButton">加载数据</button>
-            <button class="layui-btn layui-btn-sm pitaya-btn layui-btn-normal" id="printButton">用SVG打印</button>
+{#            <button class="layui-btn layui-btn-sm pitaya-btn layui-btn-normal" id="saveButton">保存画布</button>#}
+{#            <button class="layui-btn layui-btn-sm pitaya-btn layui-btn-normal" id="loadButton">加载数据</button>#}
+            <button class="layui-btn layui-btn-sm pitaya-btn layui-btn-normal" id="runButton">运行模型</button>
         </header>
 
         <section class="layui-card-body pitaya-card-body">
 
             <div class="layui-col-md3 layui-col-lg2 pitaya-card-left">
                 <div class="layui-card pitaya-left-tree">
-                    <div class="layui-card-header pitaya-layui-card-header  pitaya-title" title="工具栏">
-                        工具栏
-                    </div>
+{#                    <div class="layui-card-header pitaya-layui-card-header  pitaya-title" title="工具栏">#}
+{#                        工具栏#}
+{#                    </div>#}
                     <div class="layui-card-body pitaya-card-body">
                         <div id="myPaletteDiv"
                              style=" overflow: hidden; height: 650px;width: 200px; margin-right: 2px; background-color: whitesmoke; border: solid 1px black"></div>
@@ -42,9 +42,9 @@
 
             <div class="layui-col-md9 layui-col-lg10 pitaya-card-right">
                 <div class="layui-card pitaya-full">
-                    <div class="layui-card-header pitaya-layui-card-header  pitaya-title">
-                        我是画布名称
-                    </div>
+{#                    <div class="layui-card-header pitaya-layui-card-header  pitaya-title">#}
+{#                        我是画布名称#}
+{#                    </div>#}
                     <div class="layui-card-body pitaya-card-table pitaya-defined-padding">
                         <div id="myDiagramDiv"
                              style="flex-grow: 1;position: relative; overflow: hidden; height: 650px; border: solid 1px black"></div>
@@ -58,13 +58,52 @@
 
         </div>
 
+        <div id="myInspectorDiv2" class="inspector"  style="position:fixed; width:500px; height:300px; bottom:10px; right:40px; z-index: 9999">
+
+        </div>
 
 
-        <textarea id="mySavedModel" style="width:100%;height:300px;display: none;">
-        </textarea>
+{#        <textarea id="mySavedModel" style="width:100%;height:300px;display: none;">#}
+{#        </textarea>#}
 
     </div>
 
 </div>
 </body>
+<script type="text/javascript" src="{{ url('static', filename='win10/js/jquery-2.2.4.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('static', filename='ansi_up.js') }}"></script>
+<script type="text/javascript">
+
+
+    var ws = new WebSocket("ws://127.0.0.1:9000/soft/ws");
+    ws.onopen = function () {
+
+        $("#myInspectorDiv2").append("<br>Server connected <br>");
+
+    };
+    ws.onmessage = function (e) {
+
+        var ansi_up = new AnsiUp;
+
+        var html = ansi_up.ansi_to_html(e.data);
+
+
+        $("#myInspectorDiv2").append(html + "<br>");
+
+    };
+    ws.onclose = function () {
+
+        $("#myInspectorDiv2").append("<br>Server disconnected <br>");
+    };
+
+    $("#runButton").on("click", function () {
+
+        ws.send(JSON.stringify({"path":  window.localStorage.workflowFile}));
+        $("#myInspectorDiv2").append("<br>>> Data sent: " + window.localStorage.workflowFile + "<br>");
+
+
+    });
+
+
+</script>
 </html>
