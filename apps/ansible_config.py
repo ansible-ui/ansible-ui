@@ -11,9 +11,7 @@
 """
 
 import tempfile
-import logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+
 
 def get_ansible_hosts_data(result):
 
@@ -23,7 +21,6 @@ def get_ansible_hosts_data(result):
     构造ansible hosts内容结构
     """
 
-    logger.info(result)
 
     hosts_list = []
 
@@ -41,10 +38,7 @@ def get_ansible_hosts_data(result):
         })
     hosts_list.append(hosts_info)
 
-    logger.info(hosts_list)
     hosts_file = tempfile.mktemp()
-    logger.info(hosts_file)
-
     hosts_file = "/tmp/2.txt"
 
     with open(hosts_file, 'w+', encoding='utf-8') as file:
@@ -62,3 +56,4 @@ def get_ansible_hosts_data(result):
 
         file.write('\n'.join(hosts))
     return hosts_file
+

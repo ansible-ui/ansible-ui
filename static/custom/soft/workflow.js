@@ -502,7 +502,7 @@ window.onload = function () {
                     "role": data[index],
                     "text": data[index],
                     "key": data[index],
-                     "data": '{"likes": {$gt:50}, $or: [{"user": "usr001"},{"title": "title01"}]}',
+                     "data": {"$and": [{"is_del": 0},{"is_manage": 1}]},
                     "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 100)
                 });
                 linkDataArray.push({"from": "Start", "to": data[index], "fromPort": "B", "toPort": "T"},);
@@ -512,7 +512,7 @@ window.onload = function () {
                     "role": data[index],
                     "text": data[index],
                     "key": data[index],
-                    "data": '{"likes": {$gt:50}, $or: [{"user": "usr001"},{"title": "title01"}]}',
+                     "data": {"$and": [{"is_del": 0},{"is_manage": 1}]},
                     "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 100)
                 });
                 nodeDataArray.push({
@@ -529,7 +529,7 @@ window.onload = function () {
                     "role": data[index],
                     "text": data[index],
                     "key": data[index],
-                     "data": '{"likes": {$gt:50}, $or: [{"user": "usr001"},{"title": "title01"}]}',
+                    "data": {"$and": [{"is_del": 0},{"is_manage": 1}]},
                     "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 100)
                 });
 
@@ -604,6 +604,38 @@ window.onload = function () {
     //
     // });
 
+    var ws = new WebSocket("ws://127.0.0.1:9000/soft/ws");
+    ws.onopen = function () {
+
+        $("#myInspectorDiv2").append("<br>Server connected <br>");
+
+    };
+    ws.onmessage = function (e) {
+
+        var ansi_up = new AnsiUp;
+
+        var html = ansi_up.ansi_to_html(e.data);
+
+
+        $("#myInspectorDiv2").append(html + "<br>");
+
+        var divscll = document.getElementById('myInspectorDiv2');
+        divscll.scrollTop = divscll.scrollHeight;
+
+
+    };
+    ws.onclose = function () {
+
+        $("#myInspectorDiv2").append("<br>Server disconnected <br>");
+    };
+
+    $("#runButton").on("click", function () {
+
+        ws.send(JSON.stringify({"path": window.localStorage.workflowFile,"query":myDiagram.model.toJson()}));
+        $("#myInspectorDiv2").append("<br>>> Data sent: " + window.localStorage.workflowFile + "<br>");
+
+
+    });
 
 
 } // windows.onload
