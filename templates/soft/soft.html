@@ -157,10 +157,14 @@
 
 
 
+
                      if (obj.data.parent_id != 0) {
 
                          $("#exec").addClass("layui-btn-disabled");
                     }else{
+
+                         // 设置隐藏域的值
+                        $("#path").val(obj.data.path);
                           $("#exec").removeClass("layui-btn-disabled");
                      }
 
@@ -169,8 +173,7 @@
                         // 可用
                         $("#save").removeClass("layui-btn-disabled");
 
-                        // 设置隐藏域的值
-                        $("#path").val(obj.data.path);
+
 
 
                         // 远程获取文件内容 并显示
@@ -217,38 +220,12 @@
     });
 
 
-    var ws = new WebSocket("ws://127.0.0.1:8080/soft/ws");
-    ws.onopen = function () {
-
-        $("#servermsg").append("<br>Server connected <br>");
-
-    };
-    ws.onmessage = function (e) {
-
-        var ansi_up = new AnsiUp;
-
-        var html = ansi_up.ansi_to_html(e.data);
-
-
-        $("#servermsg").append(html + "<br>");
-
-    };
-    ws.onclose = function () {
-
-        $("#servermsg").append("<br>Server disconnected <br>");
-    };
-
     $("#exec").on("click", function () {
-
-        // ws.send(JSON.stringify({"path": $("#path").val()}));
-        //
-        // $("#servermsg").append("<br>>> Data sent: " + $("#path").val() + "<br>");
-
 
         /*缓存*/
         if (window.localStorage) {
             var wLocal = window.localStorage;
-            wLocal.workflowFile = $("#path").val() ;
+            wLocal.workflowFile = $("#path").val() + "/main.yaml" ;
         } else {
             console.log('请使用高版本浏览器');
         }
