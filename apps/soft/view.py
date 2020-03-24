@@ -45,7 +45,7 @@ async def handler_soft_workflow_roles(request):
 
 
 async def handler_ansible_list(request):
-    dir_path = request.app['settings'].ansible_workspace
+    dir_path = request.app['settings'].ansible_soft_workspace
 
     result = get_tree(dir_path)
 

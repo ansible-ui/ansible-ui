@@ -16,6 +16,8 @@ class Settings(object):
             'port': 27017
         }
 
-    ansible_workspace = "/data/ansible_workspace"
+    ansible_game_workspace = "/data/ansible_game_workspace"
+
+    ansible_soft_workspace = "/data/ansible_soft_workspace"
 
     terraform_workspace = "/data/terraform_workspace"
