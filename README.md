@@ -31,13 +31,13 @@
 ### 预览
 
 
-![image](https://github.com/multi-cloud-devops/keiTang/blob/master/1.png)
+![image](https://github.com/multi-cloud-devops/keiTang/blob/master/images/1.png)
 
-![image](https://github.com/multi-cloud-devops/keiTang/blob/master/2.png)
+![image](https://github.com/multi-cloud-devops/keiTang/blob/master/images/2.png)
 
-![image](https://github.com/multi-cloud-devops/keiTang/blob/master/3.png)
+![image](https://github.com/multi-cloud-devops/keiTang/blob/master/images/3.png)
 
-![image](https://github.com/multi-cloud-devops/keiTang/blob/master/4.png)
+![image](https://github.com/multi-cloud-devops/keiTang/blob/master/images/4.png)
 
 
 
