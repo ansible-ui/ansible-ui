@@ -15,7 +15,8 @@
 ###  clone 仓库
 
     git clone  git@github.com:multi-cloud-devops/terraform_workspace.git /data
-    git clone  git@github.com:multi-cloud-devops/ansible_workspace.git /data
+    git clone  git@github.com:multi-cloud-devops/ansible_soft_workspace.git /data
+    git clone  git@github.com:multi-cloud-devops/ansible_game_workspace.git /data
     git clone  git@github.com:multi-cloud-devops/macross.git /data
     
 ### 环境准备
