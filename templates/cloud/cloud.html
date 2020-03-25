@@ -42,12 +42,14 @@
             </div>
 
 
-            <div class="layui-form-item" id="servermsg">
 
-            </div>
 
             <div class="layui-form-item">
                 <pre id="code" class="ace_editor" style="min-height:400px"></pre>
+            </div>
+
+            <div class="layui-form-item" id="servermsg">
+
             </div>
 
 
@@ -191,7 +193,7 @@
     });
 
 
-    var ws = new WebSocket("ws://127.0.0.1:8080/cloud/ws");
+    var ws = new WebSocket("ws://127.0.0.1:9000/cloud/ws");
     ws.onopen = function () {
 
         $("#servermsg").append("<br>Server connected <br>");
