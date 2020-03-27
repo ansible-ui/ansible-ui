@@ -27,23 +27,23 @@ def get_files_data(dirpath, jsonlist):
             if d[0] == ".": continue
             if index == 0:
 
-                jsondict = {"id": os.path.join(root, d), "parent_id": 0,
+                jsondict = {"id": os.path.join(root, d), "parent_id": 0, "level_id": index,
                             "path": os.path.join(root, d), "title": d, "type": "dir"}
                 jsonlist.append(jsondict)
             else:
-                jsondict = {"id": os.path.join(root, d), "parent_id": root,
+                jsondict = {"id": os.path.join(root, d), "parent_id": root, "level_id": index,
                             "path": os.path.join(root, d), "title": d, "type": "dir"}
                 jsonlist.append(jsondict)
         for f in files:
             if f[0] == ".": continue
 
             if index == 0:
-                jsondict = {"id": os.path.join(root, f), "parent_id": 0,
+                jsondict = {"id": os.path.join(root, f), "parent_id": 0, "level_id": index,
                             "path": os.path.join(root, f), "title": f, "type": "file"}
 
             else:
 
-                jsondict = {"id": os.path.join(root, f), "parent_id": root,
+                jsondict = {"id": os.path.join(root, f), "parent_id": root, "level_id": index,
                             "path": os.path.join(root, f), "title": f, "type": "file"}
 
             jsonlist.append(jsondict)

@@ -16,7 +16,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <div id="test7" class="demo-tree"></div>
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                <legend>开启节点操作图标</legend>
+                <legend>选择集群执行任务</legend>
             </fieldset>
 
             <div id="test9" class="demo-tree demo-tree-box"
@@ -117,48 +117,18 @@
 
             //开启节点操作图标
             tree.render({
-                showCheckbox: true,//显示多选框
+                //showCheckbox: true,//显示多选框
                 showSearch: true,//显示搜索框
                 accordion: true,//手风琴模式
                 drag: true,//拖拽
                 elem: '#test9'
                 , data: data
-                , edit: ['ansible'] //操作节点的图标
-                , operate: function (obj) {
-                    var type = obj.type; //得到操作类型：add、edit、del
-                    var data = obj.data; //得到当前节点的数据
-                    var elem = obj.elem; //得到当前节点元素
-
-
-                     if (data.parent_id != 0) {
-
-                         $("#exec").addClass("layui-btn-disabled");
-                    }else{
-                          $("#exec").removeClass("layui-btn-disabled");
-                     }
-
-                    if (type === 'run') { //增加节点
-
-                        /*缓存*/
-                        if (window.localStorage) {
-                            var wLocal = window.localStorage;
-                            wLocal.workflowFile = data.path + "/main.yaml";
-                        } else {
-                            console.log('请使用高版本浏览器');
-                        }
-
-                        window.location = "/game/workflow";
-
-
-                    }
-                }
-
                 , click: function (obj) {
 
 
 
 
-                     if (obj.data.parent_id != 0) {
+                     if (obj.data.level_id !=1) {
 
                          $("#exec").addClass("layui-btn-disabled");
                     }else{

@@ -5189,18 +5189,14 @@ layui.define("form", function (e) {
                     var e = {
                         add: '<i class="layui-icon layui-icon-add-1"  data-type="add"></i>',
                         update: '<i class="layui-icon layui-icon-edit" data-type="update"></i>',
-                        del: '<i class="layui-icon layui-icon-delete" data-type="del"></i>',
-                        ansible: '<i class="layui-icon layui-icon-play" data-type="run"></i>'
+                        del: '<i class="layui-icon layui-icon-delete" data-type="del"></i>'
+
                     }, i = ['<div class="layui-btn-group layui-tree-btnGroup">'];
 
 
                     return t.edit === !0 && (t.edit = ["update", "del"]), "object" == typeof t.edit ? (layui.each(t.edit, function (a, n) {
 
 
-                    if (r.parent_id == 0 && n == "ansible"){
-                        i.push(e[n] || "")
-
-                    }
 
                     if ( n == "add" ||  n == "update" ||  n == "del"){
                         i.push(e[n] || "")
