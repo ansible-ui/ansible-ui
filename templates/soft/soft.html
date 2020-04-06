@@ -128,7 +128,7 @@
 
 
 
-                     if (obj.data.parent_id != 0) {
+                     if (obj.data.level_id != 1) {
 
                          $("#exec").addClass("layui-btn-disabled");
                     }else{
@@ -142,8 +142,6 @@
 
                         // 可用
                         $("#save").removeClass("layui-btn-disabled");
-
-
 
 
                         // 远程获取文件内容 并显示
@@ -195,7 +193,7 @@
         /*缓存*/
         if (window.localStorage) {
             var wLocal = window.localStorage;
-            wLocal.workflowFile = $("#path").val() + "/main.yaml" ;
+            wLocal.workflowFile = $("#path").val() + "/main.yml" ;
         } else {
             console.log('请使用高版本浏览器');
         }

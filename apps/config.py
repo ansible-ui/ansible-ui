@@ -17,36 +17,47 @@ import yaml
 
 def get_files_data(dirpath, jsonlist):
     index = 0
-    for root, dirs, files in os.walk(dirpath):
+
+    root_depth = len(dirpath.split(os.path.sep))
+
+    for root, dirs, files in os.walk(dirpath,topdown=True):
+
 
         files = [f for f in files if not f[0] == '.']
         dirs[:] = [d for d in dirs if not d[0] == '.']
 
+
         for d in dirs:
+
+            dir_path = os.path.join(root, d)
+            dir_depth = len(dir_path.split(os.path.sep))
 
             if d[0] == ".": continue
             if index == 0:
 
-                jsondict = {"id": os.path.join(root, d), "parent_id": 0, "level_id": index,
+                jsondict = {"id": os.path.join(root, d), "parent_id": 0, "level_id": int(dir_depth-root_depth),
                             "path": os.path.join(root, d), "title": d, "type": "dir"}
                 jsonlist.append(jsondict)
             else:
-                jsondict = {"id": os.path.join(root, d), "parent_id": root, "level_id": index,
+                jsondict = {"id": os.path.join(root, d), "parent_id": root, "level_id":int(dir_depth-root_depth),
                             "path": os.path.join(root, d), "title": d, "type": "dir"}
                 jsonlist.append(jsondict)
+
+
         for f in files:
             if f[0] == ".": continue
 
             if index == 0:
-                jsondict = {"id": os.path.join(root, f), "parent_id": 0, "level_id": index,
+                jsondict = {"id": os.path.join(root, f), "parent_id": 0,
                             "path": os.path.join(root, f), "title": f, "type": "file"}
 
             else:
 
-                jsondict = {"id": os.path.join(root, f), "parent_id": root, "level_id": index,
+                jsondict = {"id": os.path.join(root, f), "parent_id": root,
                             "path": os.path.join(root, f), "title": f, "type": "file"}
 
             jsonlist.append(jsondict)
+
 
         index = index + 1
 

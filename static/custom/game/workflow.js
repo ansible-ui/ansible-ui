@@ -502,17 +502,32 @@ window.onload = function () {
                     "role": data[index],
                     "text": data[index],
                     "key": data[index],
-                     "data": {"$and": [{"is_del": 0},{"is_manage": 1}]},
+                    "data": {"$and": [{"is_del": 0}, {"is_manage": 1}]},
                     "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 100)
                 });
                 linkDataArray.push({"from": "Start", "to": data[index], "fromPort": "B", "toPort": "T"},);
+
+
+                if (data.length == 1) {
+                    nodeDataArray.push({
+                        "category": "End",
+                        "text": "End",
+                        "key": "End",
+                        "loc": "{0}, {1}".signMix(100, (parseInt(index) + 2) * 100 + 200)
+                    });
+
+                    linkDataArray.push({"from": data[index], "to": "End", "fromPort": "B", "toPort": "T"},);
+
+                }
+
+
             } else if ((parseInt(index) + 1) == data.length) {
 
                 nodeDataArray.push({
                     "role": data[index],
                     "text": data[index],
                     "key": data[index],
-                     "data": {"$and": [{"is_del": 0},{"is_manage": 1}]},
+                    "data": {"$and": [{"is_del": 0}, {"is_manage": 1}]},
                     "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 100)
                 });
                 nodeDataArray.push({
@@ -529,12 +544,15 @@ window.onload = function () {
                     "role": data[index],
                     "text": data[index],
                     "key": data[index],
-                    "data": {"$and": [{"is_del": 0},{"is_manage": 1}]},
+                    "data": {"$and": [{"is_del": 0}, {"is_manage": 1}]},
                     "loc": "{0}, {1}".signMix(100, (parseInt(index) + 1) * 100 + 100)
                 });
 
                 linkDataArray.push({"from": data[index - 1], "to": data[index], "fromPort": "B", "toPort": "T"},);
+
             }
+
+
         }
         ;
 
@@ -631,7 +649,7 @@ window.onload = function () {
 
     $("#runButton").on("click", function () {
 
-        ws.send(JSON.stringify({"path": window.localStorage.workflowFile,"query":myDiagram.model.toJson()}));
+        ws.send(JSON.stringify({"path": window.localStorage.workflowFile, "query": myDiagram.model.toJson()}));
         $("#myInspectorDiv2").append("<br>>> Data sent: " + window.localStorage.workflowFile + "<br>");
 
 

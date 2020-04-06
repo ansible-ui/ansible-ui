@@ -20,9 +20,7 @@ from aiohttp import web
 import aiohttp_jinja2
 import jinja2
 
-
-
-from apps.config import  *
+from apps.config import *
 
 
 @aiohttp_jinja2.template('cloud/cloud.html')
@@ -31,8 +29,7 @@ async def handler_cloud(request):
 
 
 def handler_terraform_list(request):
-
-    dir_path =  request.app['settings'].terraform_workspace
+    dir_path = request.app['settings'].terraform_workspace
 
     result = get_tree(dir_path)
 
@@ -79,14 +76,12 @@ async def ws_terraform_run(request):
 
                 import subprocess
                 import subprocess, shlex
-                command = "terraform apply -auto-approve"
-
+                command = "terraform init && terraform apply -auto-approve"
 
                 p = subprocess.Popen(shlex.split(command),
                                      stdin=subprocess.PIPE,
                                      stdout=subprocess.PIPE,
-                                     stderr=subprocess.STDOUT,cwd=work_path )
-
+                                     stderr=subprocess.STDOUT, cwd=work_path)
 
                 # 实时获取输出
                 while p.poll() == None:
@@ -95,12 +90,10 @@ async def ws_terraform_run(request):
                     if out:
                         print("sub process output: ", out)
 
-                        result  = out.decode(encoding='utf-8', errors='strict')
+                        result = out.decode(encoding='utf-8', errors='strict')
                         await ws.send_str(result)
 
                 # 子进程返回值
-                await ws.send_str("return code: {} ".format(p.returncode) )
-
-
+                await ws.send_str("return code: {} ".format(p.returncode))
 
     return ws
