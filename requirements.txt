@@ -9,5 +9,5 @@ aiohttp-session==2.9.0
 aiohttp-devtools==0.13.1
 aiohttp-debugtoolbar==0.6.0
 pytest-aiohttp==0.3.0
-cryptography==2.8.0
+cryptography==39.0.1
 uvloop==0.14.0
